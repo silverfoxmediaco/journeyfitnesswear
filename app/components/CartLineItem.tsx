@@ -9,14 +9,13 @@ import type {
   CartApiQueryFragment,
   CartLineFragment,
 } from 'storefrontapi.generated';
+import {Minus, Plus, Trash2} from 'lucide-react';
 
 export type CartLine = OptimisticCartLine<CartApiQueryFragment>;
 
 /**
  * A single line item in the cart. It displays the product image, title, price.
  * It also provides controls to update the quantity or remove the line item.
- * If the line is a parent line that has child components (like warranties or gift wrapping), they are
- * rendered nested below the parent line.
  */
 export function CartLineItem({
   layout,
@@ -35,53 +34,76 @@ export function CartLineItem({
   const childrenLabelId = `cart-line-children-${id}`;
 
   return (
-    <li key={id} className="cart-line">
-      <div className="cart-line-inner">
+    <li key={id} className="jfw-cart-line border-b border-jfw-gray py-5 first:pt-0 last:border-b-0">
+      <div className="jfw-cart-line-inner flex gap-4">
+        {/* Product Image */}
         {image && (
-          <Image
-            alt={title}
-            aspectRatio="1/1"
-            data={image}
-            height={100}
-            loading="lazy"
-            width={100}
-          />
-        )}
-
-        <div>
           <Link
             prefetch="intent"
             to={lineItemUrl}
             onClick={() => {
-              if (layout === 'aside') {
-                close();
-              }
+              if (layout === 'aside') close();
             }}
+            className="jfw-cart-line-image flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden bg-jfw-gray"
           >
-            <p>
-              <strong>{product.title}</strong>
+            <Image
+              alt={title}
+              aspectRatio="1/1"
+              data={image}
+              height={100}
+              loading="lazy"
+              width={100}
+              className="w-full h-full object-cover"
+            />
+          </Link>
+        )}
+
+        {/* Product Details */}
+        <div className="jfw-cart-line-details flex-1 min-w-0">
+          <Link
+            prefetch="intent"
+            to={lineItemUrl}
+            onClick={() => {
+              if (layout === 'aside') close();
+            }}
+            className="group"
+          >
+            <p className="jfw-cart-line-title font-heading text-xs md:text-sm uppercase tracking-[0.1em] text-jfw-white group-hover:text-jfw-blue transition-colors duration-200 truncate">
+              {product.title}
             </p>
           </Link>
-          <ProductPrice price={line?.cost?.totalAmount} />
-          <ul>
+
+          {/* Selected Options (Size, Color, etc.) */}
+          <ul className="jfw-cart-line-options mt-1 flex flex-wrap gap-x-3 gap-y-0.5">
             {selectedOptions.map((option) => (
               <li key={option.name}>
-                <small>
-                  {option.name}: {option.value}
-                </small>
+                <span className="font-body text-[10px] text-gray-500 uppercase tracking-wider">
+                  {option.name}:
+                </span>{' '}
+                <span className="font-body text-[10px] text-gray-400">
+                  {option.value}
+                </span>
               </li>
             ))}
           </ul>
+
+          {/* Price */}
+          <div className="mt-2">
+            <ProductPrice price={line?.cost?.totalAmount} />
+          </div>
+
+          {/* Quantity Controls */}
           <CartLineQuantity line={line} />
         </div>
       </div>
 
+      {/* Child Line Items (warranties, gift wrapping, etc.) */}
       {lineItemChildren ? (
-        <div>
+        <div className="mt-3 ml-24 md:ml-28">
           <p id={childrenLabelId} className="sr-only">
             Line items with {product.title}
           </p>
-          <ul aria-labelledby={childrenLabelId} className="cart-line-children">
+          <ul aria-labelledby={childrenLabelId} className="jfw-cart-line-children space-y-3">
             {lineItemChildren.map((childLine) => (
               <CartLineItem
                 childrenMap={childrenMap}
@@ -99,8 +121,6 @@ export function CartLineItem({
 
 /**
  * Provides the controls to update the quantity of a line item in the cart.
- * These controls are disabled when the line item is new, and the server
- * hasn't yet responded that it was successfully added to the cart.
  */
 function CartLineQuantity({line}: {line: CartLine}) {
   if (!line || typeof line?.quantity === 'undefined') return null;
@@ -109,39 +129,46 @@ function CartLineQuantity({line}: {line: CartLine}) {
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
   return (
-    <div className="cart-line-quantity">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
-      <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
-        <button
-          aria-label="Decrease quantity"
-          disabled={quantity <= 1 || !!isOptimistic}
-          name="decrease-quantity"
-          value={prevQuantity}
-        >
-          <span>&#8722; </span>
-        </button>
-      </CartLineUpdateButton>
-      &nbsp;
-      <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
-        <button
-          aria-label="Increase quantity"
-          name="increase-quantity"
-          value={nextQuantity}
-          disabled={!!isOptimistic}
-        >
-          <span>&#43;</span>
-        </button>
-      </CartLineUpdateButton>
-      &nbsp;
+    <div className="jfw-cart-line-quantity flex items-center gap-3 mt-3">
+      {/* Quantity Selector */}
+      <div className="flex items-center border border-jfw-gray rounded-lg overflow-hidden">
+        <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
+          <button
+            aria-label="Decrease quantity"
+            disabled={quantity <= 1 || !!isOptimistic}
+            name="decrease-quantity"
+            value={prevQuantity}
+            className="jfw-qty-btn w-8 h-8 flex items-center justify-center text-gray-400 hover:text-jfw-blue hover:bg-jfw-gray/50 transition-colors duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <Minus size={14} />
+          </button>
+        </CartLineUpdateButton>
+
+        <span className="jfw-qty-value w-10 h-8 flex items-center justify-center font-body text-sm text-jfw-white bg-jfw-dark border-x border-jfw-gray">
+          {quantity}
+        </span>
+
+        <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
+          <button
+            aria-label="Increase quantity"
+            name="increase-quantity"
+            value={nextQuantity}
+            disabled={!!isOptimistic}
+            className="jfw-qty-btn w-8 h-8 flex items-center justify-center text-gray-400 hover:text-jfw-blue hover:bg-jfw-gray/50 transition-colors duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <Plus size={14} />
+          </button>
+        </CartLineUpdateButton>
+      </div>
+
+      {/* Remove Button */}
       <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
     </div>
   );
 }
 
 /**
- * A button that removes a line item from the cart. It is disabled
- * when the line item is new, and the server hasn't yet responded
- * that it was successfully added to the cart.
+ * A button that removes a line item from the cart.
  */
 function CartLineRemoveButton({
   lineIds,
@@ -157,7 +184,12 @@ function CartLineRemoveButton({
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button disabled={disabled} type="submit">
+      <button
+        disabled={disabled}
+        type="submit"
+        className="jfw-cart-remove flex items-center gap-1.5 font-body text-[11px] uppercase tracking-wider text-gray-500 hover:text-red-400 transition-colors duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+      >
+        <Trash2 size={13} />
         Remove
       </button>
     </CartForm>
@@ -185,13 +217,6 @@ function CartLineUpdateButton({
   );
 }
 
-/**
- * Returns a unique key for the update action. This is used to make sure actions modifying the same line
- * items are not run concurrently, but cancel each other. For example, if the user clicks "Increase quantity"
- * and "Decrease quantity" in rapid succession, the actions will cancel each other and only the last one will run.
- * @param lineIds - line ids affected by the update
- * @returns
- */
 function getUpdateKey(lineIds: string[]) {
   return [CartForm.ACTIONS.LinesUpdate, ...lineIds].join('-');
 }

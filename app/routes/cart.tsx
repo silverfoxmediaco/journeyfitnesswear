@@ -5,7 +5,13 @@ import {CartForm} from '@shopify/hydrogen';
 import {CartMain} from '~/components/CartMain';
 
 export const meta: Route.MetaFunction = () => {
-  return [{title: `Hydrogen | Cart`}];
+  return [
+    {title: 'Journey Fitness Wear | Cart'},
+    {
+      name: 'description',
+      content: 'Review your cart and proceed to checkout at Journey Fitness Wear.',
+    },
+  ];
 };
 
 export const headers: HeadersFunction = ({actionHeaders}) => actionHeaders;
@@ -37,12 +43,10 @@ export async function action({request, context}: Route.ActionArgs) {
     case CartForm.ACTIONS.DiscountCodesUpdate: {
       const formDiscountCode = inputs.discountCode;
 
-      // User inputted discount code
       const discountCodes = (
         formDiscountCode ? [formDiscountCode] : []
       ) as string[];
 
-      // Combine discount codes already applied on cart
       discountCodes.push(...inputs.discountCodes);
 
       result = await cart.updateDiscountCodes(discountCodes);
@@ -105,9 +109,19 @@ export default function Cart() {
   const cart = useLoaderData<typeof loader>();
 
   return (
-    <div className="cart">
-      <h1>Cart</h1>
-      <CartMain layout="page" cart={cart} />
+    <div className="jfw-cart-page py-8 md:py-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Page Header */}
+        <div className="jfw-cart-header mb-10 text-center">
+          <div className="w-12 h-0.5 bg-jfw-blue mx-auto mb-4" />
+          <h1 className="font-heading text-2xl md:text-3xl lg:text-4xl uppercase tracking-[0.15em] text-jfw-white">
+            Your Cart
+          </h1>
+        </div>
+
+        {/* Cart Content */}
+        <CartMain layout="page" cart={cart} />
+      </div>
     </div>
   );
 }

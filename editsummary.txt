@@ -233,9 +233,75 @@ Date: 2026-02-19
     - Unique className: jfw-product-image
 
 ========================================
+
+Phase 4 — Cart & Checkout
+Date: 2026-02-19
+========================================
+
+29. CART LINE ITEM (app/components/CartLineItem.tsx)
+    - Complete restyle with JFW dark theme
+    - Product image: 80x80 (mobile) / 96x96 (desktop), rounded-lg, linked to product
+    - Product title: Orbitron uppercase, truncated, hover turns cyan
+    - Selected options (Size, Color): tiny uppercase labels in gray
+    - Price: uses existing ProductPrice component
+    - Quantity controls: styled +/- pill buttons with Lucide Minus/Plus icons
+      - Center quantity value in dark bg with gray borders
+      - Hover: text turns cyan, subtle bg change
+      - Disabled states at 30% opacity
+    - Remove button: Lucide Trash2 icon + "Remove" text, hover turns red-400
+    - Child line items (warranties, etc.) rendered nested with left indent
+    - Unique classNames: jfw-cart-line, jfw-cart-line-inner, jfw-cart-line-image,
+      jfw-cart-line-details, jfw-cart-line-title, jfw-cart-line-options,
+      jfw-cart-line-quantity, jfw-qty-btn, jfw-qty-value, jfw-cart-remove,
+      jfw-cart-line-children
+
+30. CART MAIN (app/components/CartMain.tsx)
+    - Added Lucide ShoppingBag icon import
+    - Empty state redesign:
+      - Large circular gray icon container with ShoppingBag
+      - "Your Cart is Empty" Orbitron heading
+      - Friendly subtitle text in gray
+      - Cyan "Continue Shopping" CTA button with glow hover
+    - Main cart wrapper: jfw-cart-main, jfw-cart-with-discount
+    - Lines list: jfw-cart-lines-list, jfw-cart-details
+    - Unique classNames: jfw-cart-main, jfw-cart-empty, jfw-cart-empty-cta,
+      jfw-cart-details, jfw-cart-lines-list
+
+31. CART SUMMARY (app/components/CartSummary.tsx)
+    - Complete restyle with JFW dark theme
+    - Layout-aware styling:
+      - Page: dark card (bg-jfw-dark, border, rounded-xl, padding)
+      - Aside: top border separator, top padding
+    - Subtotal: Orbitron label in gray-400, large cyan price (text-xl)
+    - Tax/shipping note: small gray text
+    - Discount codes section:
+      - Applied discounts: Tag icon, cyan code pill (bg-jfw-blue/10), "Remove" hover red
+      - Input: dark bg, gray border, cyan focus ring, "Apply" outline button
+    - Gift cards section:
+      - Applied cards: Gift icon, masked code pill, amount, "Remove" hover red
+      - Input: matching dark input style, "Apply" outline button
+    - Checkout button: full-width cyan bg, Orbitron uppercase, ArrowRight icon,
+      glow-lg hover, links to Shopify checkout
+    - Lucide icons: Tag, Gift, ArrowRight
+    - Unique classNames: jfw-cart-summary, jfw-cart-summary-page, jfw-cart-summary-aside,
+      jfw-cart-subtotal, jfw-cart-discounts, jfw-cart-discount-applied,
+      jfw-cart-discount-form, jfw-discount-input, jfw-discount-apply,
+      jfw-cart-gift-cards, jfw-cart-gift-applied, jfw-cart-gift-form,
+      jfw-gift-input, jfw-gift-apply, jfw-cart-checkout, jfw-checkout-btn
+
+32. CART PAGE ROUTE (app/routes/cart.tsx)
+    - Updated meta title: "Journey Fitness Wear | Cart"
+    - Added meta description for SEO
+    - JFW page header: cyan accent line + "Your Cart" Orbitron heading, centered
+    - Max-width container (max-w-4xl) with responsive padding
+    - Responsive vertical padding (py-8 mobile, py-16 desktop)
+    - Action handler unchanged (all CartForm actions preserved)
+    - Unique classNames: jfw-cart-page, jfw-cart-header
+
+========================================
 BUILD STATUS: PASSING
 NOTES:
 - Node.js v18 detected — recommend upgrading to v20+
 - Mock.shop connected for development; will need real Shopify store credentials
-- Phase 4 (Cart & Checkout) ready to begin
+- Phase 5 (About Us / Brand Story Page) ready to begin
 ========================================

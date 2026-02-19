@@ -4,6 +4,7 @@ import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 import {CartLineItem, type CartLine} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
+import {ShoppingBag} from 'lucide-react';
 
 export type CartLayout = 'page' | 'aside';
 
@@ -13,6 +14,7 @@ export type CartMainProps = {
 };
 
 export type LineItemChildrenMap = {[parentId: string]: CartLine[]};
+
 /** Returns a map of all line items and their children. */
 function getLineItemChildrenMap(lines: CartLine[]): LineItemChildrenMap {
   const children: LineItemChildrenMap = {};
@@ -32,51 +34,48 @@ function getLineItemChildrenMap(lines: CartLine[]): LineItemChildrenMap {
   }
   return children;
 }
+
 /**
  * The main cart component that displays the cart items and summary.
  * It is used by both the /cart route and the cart aside dialog.
  */
 export function CartMain({layout, cart: originalCart}: CartMainProps) {
-  // The useOptimisticCart hook applies pending actions to the cart
-  // so the user immediately sees feedback when they modify the cart.
   const cart = useOptimisticCart(originalCart);
 
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
   const withDiscount =
     cart &&
     Boolean(cart?.discountCodes?.filter((code) => code.applicable)?.length);
-  const className = `cart-main ${withDiscount ? 'with-discount' : ''}`;
   const cartHasItems = cart?.totalQuantity ? cart.totalQuantity > 0 : false;
   const childrenMap = getLineItemChildrenMap(cart?.lines?.nodes ?? []);
 
   return (
-    <div className={className}>
+    <div className={`jfw-cart-main ${withDiscount ? 'jfw-cart-with-discount' : ''}`}>
       <CartEmpty hidden={linesCount} layout={layout} />
-      <div className="cart-details">
+
+      <div className="jfw-cart-details">
         <p id="cart-lines" className="sr-only">
           Line items
         </p>
-        <div>
-          <ul aria-labelledby="cart-lines">
-            {(cart?.lines?.nodes ?? []).map((line) => {
-              // we do not render non-parent lines at the root of the cart
-              if (
-                'parentRelationship' in line &&
-                line.parentRelationship?.parent
-              ) {
-                return null;
-              }
-              return (
-                <CartLineItem
-                  key={line.id}
-                  line={line}
-                  layout={layout}
-                  childrenMap={childrenMap}
-                />
-              );
-            })}
-          </ul>
-        </div>
+        <ul aria-labelledby="cart-lines" className="jfw-cart-lines-list">
+          {(cart?.lines?.nodes ?? []).map((line) => {
+            if (
+              'parentRelationship' in line &&
+              line.parentRelationship?.parent
+            ) {
+              return null;
+            }
+            return (
+              <CartLineItem
+                key={line.id}
+                line={line}
+                layout={layout}
+                childrenMap={childrenMap}
+              />
+            );
+          })}
+        </ul>
+
         {cartHasItems && <CartSummary cart={cart} layout={layout} />}
       </div>
     </div>
@@ -85,21 +84,33 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
 
 function CartEmpty({
   hidden = false,
+  layout,
 }: {
   hidden: boolean;
   layout?: CartMainProps['layout'];
 }) {
   const {close} = useAside();
   return (
-    <div hidden={hidden}>
-      <br />
-      <p>
-        Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-        started!
+    <div
+      hidden={hidden}
+      className="jfw-cart-empty flex flex-col items-center justify-center py-16 text-center"
+    >
+      <div className="w-20 h-20 rounded-full bg-jfw-gray flex items-center justify-center mb-6">
+        <ShoppingBag size={32} className="text-gray-600" />
+      </div>
+      <h3 className="font-heading text-lg uppercase tracking-[0.15em] text-jfw-white mb-3">
+        Your Cart is Empty
+      </h3>
+      <p className="font-body text-sm text-gray-500 mb-8 max-w-xs">
+        Looks like you haven&rsquo;t added anything yet. Let&rsquo;s get you started!
       </p>
-      <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
-        Continue shopping →
+      <Link
+        to="/collections"
+        onClick={close}
+        prefetch="viewport"
+        className="jfw-cart-empty-cta inline-flex items-center gap-2 bg-jfw-blue hover:bg-jfw-blue-dark text-jfw-black font-heading text-xs uppercase tracking-[0.2em] px-8 py-3 rounded-lg transition-all duration-300 hover:shadow-jfw-glow-lg"
+      >
+        Continue Shopping
       </Link>
     </div>
   );
