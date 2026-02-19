@@ -27,8 +27,8 @@ export function FeaturedCollections({collections}: FeaturedCollectionsProps) {
           </h2>
         </motion.div>
 
-        {/* Collections Grid */}
-        <div className="jfw-collections-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Collections Grid — centered for 2 items, scales to 3 if more are added */}
+        <div className={`jfw-collections-grid grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 mx-auto ${collections.length <= 2 ? 'max-w-4xl' : 'lg:grid-cols-3'}`}>
           {collections.map((collection, index) => (
             <motion.div
               key={collection.id}
