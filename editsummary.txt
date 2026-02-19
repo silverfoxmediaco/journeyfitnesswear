@@ -349,13 +349,84 @@ IMAGE USAGE MAP:
     - kettleballs.webp → Motivation Banner (desktop)
     - kettleballsmobile.webp → Motivation Banner (mobile)
     - dumbbellrows.webp → Newsletter subtle background
-    - dumbbell-raises.webp → Available (About Us page / Phase 5)
-    - mobiledumbbellrows.webp → Available (About Us mobile / Phase 5)
+    - dumbbell-raises.webp → About Us hero background
+    - mobiledumbbellrows.webp → About Us brand origin section
+
+========================================
+
+Phase 5 — About Us / Brand Story Page
+Date: 2026-02-19
+========================================
+
+38. ABOUT PAGE ROUTE — NEW (app/routes/pages.about.tsx)
+    - Dedicated route at /pages/about (takes priority over pages.$handle catch-all)
+    - SEO meta: "Journey Fitness Wear | Our Story" + description
+    - Page composed of 5 sections (all built within route file):
+
+    Section 1 — About Hero:
+    - 60vh (mobile) / 70vh (desktop) hero with dumbbell-raises.webp background
+    - Dark gradient overlay (from-black/75 via-black/65 to-dark/90)
+    - "Our Story" Orbitron heading with cyan accent on "Story"
+    - Subtext: "Built by athletes. Designed for the grind."
+    - Framer Motion fade-in + slide-up entrance
+    - Unique classNames: jfw-about-hero, jfw-about-hero-bg, jfw-about-hero-accent,
+      jfw-about-hero-heading, jfw-about-hero-subtext
+
+    Section 2 — Brand Origin:
+    - 2-column grid layout (image left on desktop, text-first on mobile)
+    - Image: mobiledumbbellrows.webp in 4:5 aspect ratio with subtle gradient
+    - Cyan accent border detail (bottom-left, hidden on mobile)
+    - "The Mission" heading with cyan accent
+    - 3 paragraphs of brand origin copy: founding story, athlete roots, craftsmanship
+    - Framer Motion slide-in from left (image) and right (text)
+    - Unique classNames: jfw-about-origin, jfw-about-origin-image,
+      jfw-about-origin-img, jfw-about-origin-text, jfw-about-origin-heading
+
+    Section 3 — Brand Values:
+    - Section heading: "What We Stand For" with cyan accent
+    - 4-column responsive grid (1 col mobile, 2 col sm, 4 col lg)
+    - 4 value cards with:
+      - Lucide icon in cyan circle (Zap, Palette, Users, Shield)
+      - Orbitron title (Performance, Style, Community, Quality)
+      - Poppins description text
+      - Dark card with gray border, hover: cyan border glow + shadow-jfw-glow
+      - Staggered Framer Motion reveal (0.1s delay between cards)
+    - Unique classNames: jfw-about-values, jfw-about-values-heading,
+      jfw-about-values-grid, jfw-about-value-card, jfw-about-value-icon,
+      jfw-about-value-title
+
+    Section 4 — Tagline Banner:
+    - Full-width image section with kettleballs.webp background
+    - 400px (mobile) / 500px (desktop) height
+    - Dark overlay (bg-jfw-black/70)
+    - Large centered "What's Your Journey?" Orbitron heading
+    - Cyan accent line below heading
+    - Framer Motion scale-in effect
+    - Unique classNames: jfw-about-tagline, jfw-about-tagline-bg,
+      jfw-about-tagline-content, jfw-about-tagline-heading
+
+    Section 5 — Shop CTA:
+    - Centered text section on black background
+    - "Ready to Start Your Journey?" heading
+    - Subtext about the collection
+    - Cyan "Shop the Collection" button with ArrowRight icon, glow hover
+    - Framer Motion fade-in
+    - Unique classNames: jfw-about-cta, jfw-about-cta-heading, jfw-about-cta-btn
+
+UPDATED IMAGE USAGE MAP:
+    - woman-powerlifting.webp → Home Hero Banner background
+    - Planking.webp → Home Brand Story (desktop)
+    - mobilePlanking.webp → Home Brand Story (mobile)
+    - kettleballs.webp → Home Motivation Banner (desktop) + About Tagline Banner
+    - kettleballsmobile.webp → Home Motivation Banner (mobile)
+    - dumbbellrows.webp → Home Newsletter subtle background
+    - dumbbell-raises.webp → About Us hero background
+    - mobiledumbbellrows.webp → About Us brand origin section
 
 ========================================
 BUILD STATUS: PASSING
 NOTES:
 - Node.js v18 detected — recommend upgrading to v20+
 - Mock.shop connected for development; will need real Shopify store credentials
-- Phase 5 (About Us / Brand Story Page) ready to begin
+- Phase 6 (Customer Accounts & Loyalty) ready to begin
 ========================================
