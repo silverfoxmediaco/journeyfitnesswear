@@ -18,15 +18,16 @@ export function ProductForm({
   const navigate = useNavigate();
   const {open} = useAside();
   return (
-    <div className="product-form">
+    <div className="jfw-product-form space-y-6">
       {productOptions.map((option) => {
-        // If there is only a single value in the option values, don't display the option
         if (option.optionValues.length === 1) return null;
 
         return (
-          <div className="product-options" key={option.name}>
-            <h5>{option.name}</h5>
-            <div className="product-options-grid">
+          <div className="jfw-product-options" key={option.name}>
+            <h5 className="font-heading text-xs uppercase tracking-[0.2em] text-gray-400 mb-3">
+              {option.name}
+            </h5>
+            <div className="jfw-product-options-grid flex flex-wrap gap-2">
               {option.optionValues.map((value) => {
                 const {
                   name,
@@ -39,48 +40,35 @@ export function ProductForm({
                   swatch,
                 } = value;
 
+                const pillClasses = `jfw-option-pill inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-body transition-all duration-200 ${
+                  selected
+                    ? 'bg-jfw-blue text-jfw-black border border-jfw-blue shadow-jfw-glow'
+                    : exists
+                      ? 'bg-jfw-gray text-jfw-white border border-jfw-gray hover:border-jfw-blue/50 hover:text-jfw-blue cursor-pointer'
+                      : 'bg-jfw-gray/50 text-gray-600 border border-jfw-gray/50 cursor-not-allowed'
+                }`;
+
                 if (isDifferentProduct) {
-                  // SEO
-                  // When the variant is a combined listing child product
-                  // that leads to a different url, we need to render it
-                  // as an anchor tag
                   return (
                     <Link
-                      className="product-options-item"
+                      className={pillClasses}
                       key={option.name + name}
                       prefetch="intent"
                       preventScrollReset
                       replace
                       to={`/products/${handle}?${variantUriQuery}`}
-                      style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
-                        opacity: available ? 1 : 0.3,
-                      }}
+                      style={{opacity: available ? 1 : 0.4}}
                     >
                       <ProductOptionSwatch swatch={swatch} name={name} />
                     </Link>
                   );
                 } else {
-                  // SEO
-                  // When the variant is an update to the search param,
-                  // render it as a button with javascript navigating to
-                  // the variant so that SEO bots do not index these as
-                  // duplicated links
                   return (
                     <button
                       type="button"
-                      className={`product-options-item${
-                        exists && !selected ? ' link' : ''
-                      }`}
+                      className={pillClasses}
                       key={option.name + name}
-                      style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
-                        opacity: available ? 1 : 0.3,
-                      }}
+                      style={{opacity: available ? 1 : 0.4}}
                       disabled={!exists}
                       onClick={() => {
                         if (!selected) {
@@ -97,29 +85,32 @@ export function ProductForm({
                 }
               })}
             </div>
-            <br />
           </div>
         );
       })}
-      <AddToCartButton
-        disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={() => {
-          open('cart');
-        }}
-        lines={
-          selectedVariant
-            ? [
-                {
-                  merchandiseId: selectedVariant.id,
-                  quantity: 1,
-                  selectedVariant,
-                },
-              ]
-            : []
-        }
-      >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
-      </AddToCartButton>
+
+      {/* Add to Cart */}
+      <div className="pt-2">
+        <AddToCartButton
+          disabled={!selectedVariant || !selectedVariant.availableForSale}
+          onClick={() => {
+            open('cart');
+          }}
+          lines={
+            selectedVariant
+              ? [
+                  {
+                    merchandiseId: selectedVariant.id,
+                    quantity: 1,
+                    selectedVariant,
+                  },
+                ]
+              : []
+          }
+        >
+          {selectedVariant?.availableForSale ? 'Add to Cart' : 'Sold Out'}
+        </AddToCartButton>
+      </div>
     </div>
   );
 }
@@ -139,12 +130,12 @@ function ProductOptionSwatch({
   return (
     <div
       aria-label={name}
-      className="product-option-label-swatch"
+      className="jfw-option-swatch w-5 h-5 rounded-full border border-gray-600"
       style={{
         backgroundColor: color || 'transparent',
       }}
     >
-      {!!image && <img src={image} alt={name} />}
+      {!!image && <img src={image} alt={name} className="w-full h-full rounded-full" />}
     </div>
   );
 }

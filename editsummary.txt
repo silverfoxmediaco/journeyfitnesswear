@@ -160,9 +160,82 @@ Date: 2026-02-19
     - Scroll state: adds subtle shadow + gray-200 border on scroll (no color change)
 
 ========================================
+
+Phase 3 — Product Pages
+Date: 2026-02-19
+========================================
+
+19. PRODUCT CARD (app/components/product/ProductCard.tsx) — NEW
+    - Dark card with rounded-lg, hover zoom (scale-110), cyan border glow
+    - Square aspect ratio image
+    - Poppins title (semi-bold, line-clamp-2), cyan price
+    - "View Product" overlay slides up on hover
+    - Unique classNames: jfw-product-card, jfw-product-card-image, jfw-product-card-overlay
+
+20. PRODUCT GRID (app/components/product/ProductGrid.tsx) — NEW
+    - Responsive: 2 cols mobile, 3 cols md, 4 cols lg
+    - Gap: 1rem mobile, 1.5rem desktop
+
+21. COLLECTIONS INDEX (app/routes/collections._index.tsx)
+    - JFW page header: "Our Collections" with cyan accent line
+    - SEO meta title + description
+    - Collection cards: 4:5 aspect, gradient overlay, hover zoom + cyan glow
+    - "Shop Now →" CTA fades in on hover
+    - Grid: 1 col mobile, 2 col sm, 3 col lg
+    - Bumped pageBy from 4 to 8
+    - Unique classNames: jfw-collections-page, jfw-collection-item
+
+22. SINGLE COLLECTION (app/routes/collections.$handle.tsx)
+    - JFW page header with title + description
+    - Uses new ProductCard component (replaces ProductItem)
+    - Grid: 2 cols mobile, 3 md, 4 lg
+    - SEO meta with dynamic title + description
+    - Bumped pageBy from 8 to 12
+
+23. ALL PRODUCTS (app/routes/collections.all.tsx)
+    - JFW "All Products" heading with cyan accent
+    - Uses ProductCard component
+    - SEO meta title + description
+    - Bumped pageBy to 12
+
+24. PRODUCT DETAIL (app/routes/products.$handle.tsx)
+    - 2-column grid layout (image left, info right)
+    - Sticky product info panel on desktop (top-28)
+    - Vendor label in cyan Orbitron (above title)
+    - Orbitron product title, large tracking
+    - Dividers between sections (bg-jfw-gray)
+    - Description section with prose-invert styling
+    - SEO meta with product title + description
+
+25. ADD TO CART BUTTON (app/components/AddToCartButton.tsx)
+    - Full-width cyan button with ShoppingBag Lucide icon
+    - Orbitron uppercase text, letter-spacing
+    - Glow-lg on hover, disabled state at 50% opacity
+    - Unique className: jfw-add-to-cart
+
+26. PRODUCT FORM (app/components/ProductForm.tsx)
+    - Pill-style variant selectors (rounded-lg, padding)
+    - Selected: cyan bg + glow, Unselected: gray bg + hover cyan border
+    - Unavailable: faded at 40% opacity, cursor-not-allowed
+    - Color swatches: 20px circles with border
+    - Space-y-6 layout
+    - Unique classNames: jfw-product-form, jfw-option-pill, jfw-option-swatch
+
+27. PRODUCT PRICE (app/components/ProductPrice.tsx)
+    - Large cyan price (text-2xl, font-semibold)
+    - Compare-at price: strikethrough in gray
+    - "Sale" badge (red bg) when on sale
+
+28. PRODUCT IMAGE (app/components/ProductImage.tsx)
+    - Rounded-lg with overflow hidden
+    - Hover zoom (scale-105, 500ms)
+    - "No Image" placeholder with gray bg
+    - Unique className: jfw-product-image
+
+========================================
 BUILD STATUS: PASSING
 NOTES:
 - Node.js v18 detected — recommend upgrading to v20+
 - Mock.shop connected for development; will need real Shopify store credentials
-- Phase 3 (Product Pages) ready to begin
+- Phase 4 (Cart & Checkout) ready to begin
 ========================================

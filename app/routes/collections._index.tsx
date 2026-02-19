@@ -4,40 +4,37 @@ import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import type {CollectionFragment} from 'storefrontapi.generated';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 
+export const meta: Route.MetaFunction = () => {
+  return [
+    {title: 'Journey Fitness Wear | Collections'},
+    {
+      name: 'description',
+      content:
+        'Shop all Journey Fitness Wear collections. Performance apparel built for every rep, every mile, every goal.',
+    },
+  ];
+};
+
 export async function loader(args: Route.LoaderArgs) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   return {...deferredData, ...criticalData};
 }
 
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- */
 async function loadCriticalData({context, request}: Route.LoaderArgs) {
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 4,
+    pageBy: 8,
   });
 
   const [{collections}] = await Promise.all([
     context.storefront.query(COLLECTIONS_QUERY, {
       variables: paginationVariables,
     }),
-    // Add other queries here, so that they are loaded in parallel
   ]);
 
   return {collections};
 }
 
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- */
 function loadDeferredData({context}: Route.LoaderArgs) {
   return {};
 }
@@ -46,20 +43,33 @@ export default function Collections() {
   const {collections} = useLoaderData<typeof loader>();
 
   return (
-    <div className="collections">
-      <h1>Collections</h1>
-      <PaginatedResourceSection<CollectionFragment>
-        connection={collections}
-        resourcesClassName="collections-grid"
-      >
-        {({node: collection, index}) => (
-          <CollectionItem
-            key={collection.id}
-            collection={collection}
-            index={index}
-          />
-        )}
-      </PaginatedResourceSection>
+    <div className="jfw-collections-page py-12 md:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Page Header */}
+        <div className="text-center mb-12">
+          <div className="w-12 h-[2px] bg-jfw-blue mx-auto mb-6" />
+          <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.15em] text-jfw-white mb-4">
+            Our <span className="text-jfw-blue">Collections</span>
+          </h1>
+          <p className="font-body text-base text-gray-400 max-w-xl mx-auto">
+            Explore our curated collections of performance fitness wear.
+          </p>
+        </div>
+
+        {/* Collections Grid */}
+        <PaginatedResourceSection<CollectionFragment>
+          connection={collections}
+          resourcesClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+        >
+          {({node: collection, index}) => (
+            <CollectionItem
+              key={collection.id}
+              collection={collection}
+              index={index}
+            />
+          )}
+        </PaginatedResourceSection>
+      </div>
     </div>
   );
 }
@@ -73,21 +83,35 @@ function CollectionItem({
 }) {
   return (
     <Link
-      className="collection-item"
+      className="jfw-collection-item group block relative overflow-hidden rounded-lg bg-jfw-gray border border-transparent hover:border-jfw-blue/30 transition-all duration-300 hover:shadow-jfw-glow"
       key={collection.id}
       to={`/collections/${collection.handle}`}
       prefetch="intent"
     >
       {collection?.image && (
-        <Image
-          alt={collection.image.altText || collection.title}
-          aspectRatio="1/1"
-          data={collection.image}
-          loading={index < 3 ? 'eager' : undefined}
-          sizes="(min-width: 45em) 400px, 100vw"
-        />
+        <div className="aspect-[4/5] overflow-hidden">
+          <Image
+            alt={collection.image.altText || collection.title}
+            aspectRatio="4/5"
+            data={collection.image}
+            loading={index < 3 ? 'eager' : undefined}
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        </div>
       )}
-      <h5>{collection.title}</h5>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-jfw-black/80 via-jfw-black/20 to-transparent" />
+
+      {/* Title */}
+      <div className="absolute bottom-0 left-0 right-0 p-6">
+        <h3 className="jfw-collection-item-title font-heading text-lg uppercase tracking-[0.15em] text-jfw-white group-hover:text-jfw-blue transition-colors duration-300">
+          {collection.title}
+        </h3>
+        <span className="inline-block mt-2 font-heading text-[10px] uppercase tracking-[0.2em] text-jfw-blue opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+          Shop Now &rarr;
+        </span>
+      </div>
     </Link>
   );
 }
