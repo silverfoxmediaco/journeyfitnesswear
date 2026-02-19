@@ -1,4 +1,4 @@
-import {Suspense} from 'react';
+import {Suspense, useState, useEffect} from 'react';
 import {Await, NavLink, useAsyncValue} from 'react-router';
 import {
   type CartViewPayload,
@@ -7,6 +7,7 @@ import {
 } from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
+import {ShoppingBag, Search, Menu, User} from 'lucide-react';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -24,18 +25,51 @@ export function Header({
   publicStoreDomain,
 }: HeaderProps) {
   const {shop, menu} = header;
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, {passive: true});
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
-      </NavLink>
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+    <header
+      className={`jfw-header fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-jfw-black/95 backdrop-blur-md shadow-lg border-b border-jfw-gray'
+          : 'bg-transparent'
+      }`}
+      style={{height: 'var(--header-height)'}}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+        {/* Logo */}
+        <NavLink
+          prefetch="intent"
+          to="/"
+          className="jfw-header-logo flex-shrink-0"
+          end
+        >
+          <img
+            src="/logos/JOURNEY800V1BLUE.png"
+            alt={shop.name || 'Journey Fitness Wear'}
+            className="h-10 md:h-12 w-auto"
+          />
+        </NavLink>
+
+        {/* Desktop Nav */}
+        <HeaderMenu
+          menu={menu}
+          viewport="desktop"
+          primaryDomainUrl={header.shop.primaryDomain.url}
+          publicStoreDomain={publicStoreDomain}
+        />
+
+        {/* CTAs */}
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      </div>
     </header>
   );
 }
@@ -51,26 +85,64 @@ export function HeaderMenu({
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
 }) {
-  const className = `header-menu-${viewport}`;
   const {close} = useAside();
 
-  return (
-    <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
+  if (viewport === 'mobile') {
+    return (
+      <nav className="jfw-mobile-nav flex flex-col gap-2 py-4" role="navigation">
         <NavLink
           end
           onClick={close}
           prefetch="intent"
-          style={activeLinkStyle}
           to="/"
+          className={({isActive}) =>
+            `jfw-mobile-nav-link block px-4 py-3 font-heading text-sm uppercase tracking-widest transition-all duration-200 border-l-2 ${
+              isActive
+                ? 'text-jfw-blue border-jfw-blue bg-jfw-blue/5'
+                : 'text-jfw-white border-transparent hover:text-jfw-blue hover:border-jfw-blue/50'
+            }`
+          }
         >
           Home
         </NavLink>
-      )}
+        {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
+          if (!item.url) return null;
+          const url =
+            item.url.includes('myshopify.com') ||
+            item.url.includes(publicStoreDomain) ||
+            item.url.includes(primaryDomainUrl)
+              ? new URL(item.url).pathname
+              : item.url;
+          return (
+            <NavLink
+              end
+              key={item.id}
+              onClick={close}
+              prefetch="intent"
+              to={url}
+              className={({isActive}) =>
+                `jfw-mobile-nav-link block px-4 py-3 font-heading text-sm uppercase tracking-widest transition-all duration-200 border-l-2 ${
+                  isActive
+                    ? 'text-jfw-blue border-jfw-blue bg-jfw-blue/5'
+                    : 'text-jfw-white border-transparent hover:text-jfw-blue hover:border-jfw-blue/50'
+                }`
+              }
+            >
+              {item.title}
+            </NavLink>
+          );
+        })}
+      </nav>
+    );
+  }
+
+  return (
+    <nav
+      className="jfw-desktop-nav hidden md:flex items-center gap-8"
+      role="navigation"
+    >
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
-
-        // if the url is internal, we strip the domain
         const url =
           item.url.includes('myshopify.com') ||
           item.url.includes(publicStoreDomain) ||
@@ -79,15 +151,28 @@ export function HeaderMenu({
             : item.url;
         return (
           <NavLink
-            className="header-menu-item"
             end
             key={item.id}
-            onClick={close}
             prefetch="intent"
-            style={activeLinkStyle}
             to={url}
+            className={({isActive}) =>
+              `jfw-nav-link font-heading text-xs uppercase tracking-[0.2em] transition-all duration-200 relative py-1 ${
+                isActive
+                  ? 'text-jfw-blue'
+                  : 'text-jfw-white hover:text-jfw-blue'
+              }`
+            }
           >
-            {item.title}
+            {({isActive}) => (
+              <>
+                {item.title}
+                <span
+                  className={`absolute -bottom-1 left-0 h-[2px] bg-jfw-blue transition-all duration-300 ${
+                    isActive ? 'w-full' : 'w-0'
+                  }`}
+                />
+              </>
+            )}
           </NavLink>
         );
       })}
@@ -100,17 +185,21 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="header-ctas" role="navigation">
-      <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-        <Suspense fallback="Sign in">
-          <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
-          </Await>
-        </Suspense>
-      </NavLink>
+    <nav
+      className="jfw-header-ctas flex items-center gap-3 sm:gap-5"
+      role="navigation"
+    >
       <SearchToggle />
+      <NavLink
+        prefetch="intent"
+        to="/account"
+        className="jfw-account-link text-jfw-white hover:text-jfw-blue transition-colors duration-200 hidden sm:block"
+        aria-label="Account"
+      >
+        <User size={22} strokeWidth={1.5} />
+      </NavLink>
       <CartToggle cart={cart} />
+      <HeaderMenuMobileToggle />
     </nav>
   );
 }
@@ -119,10 +208,11 @@ function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
     <button
-      className="header-menu-mobile-toggle reset"
+      className="jfw-mobile-toggle md:hidden text-jfw-white hover:text-jfw-blue transition-colors duration-200"
       onClick={() => open('mobile')}
+      aria-label="Open menu"
     >
-      <h3>☰</h3>
+      <Menu size={26} strokeWidth={1.5} />
     </button>
   );
 }
@@ -130,8 +220,12 @@ function HeaderMenuMobileToggle() {
 function SearchToggle() {
   const {open} = useAside();
   return (
-    <button className="reset" onClick={() => open('search')}>
-      Search
+    <button
+      className="jfw-search-toggle text-jfw-white hover:text-jfw-blue transition-colors duration-200"
+      onClick={() => open('search')}
+      aria-label="Search"
+    >
+      <Search size={22} strokeWidth={1.5} />
     </button>
   );
 }
@@ -143,6 +237,7 @@ function CartBadge({count}: {count: number | null}) {
   return (
     <a
       href="/cart"
+      className="jfw-cart-badge relative text-jfw-white hover:text-jfw-blue transition-colors duration-200"
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -153,8 +248,14 @@ function CartBadge({count}: {count: number | null}) {
           url: window.location.href || '',
         } as CartViewPayload);
       }}
+      aria-label={`Cart${count ? ` (${count} items)` : ''}`}
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      <ShoppingBag size={22} strokeWidth={1.5} />
+      {count !== null && count > 0 && (
+        <span className="jfw-cart-count absolute -top-2 -right-2 bg-jfw-blue text-jfw-black text-[10px] font-body font-bold w-5 h-5 rounded-full flex items-center justify-center">
+          {count}
+        </span>
+      )}
     </a>
   );
 }
@@ -179,53 +280,40 @@ const FALLBACK_HEADER_MENU = {
   id: 'gid://shopify/Menu/199655587896',
   items: [
     {
-      id: 'gid://shopify/MenuItem/461609500728',
+      id: 'gid://shopify/MenuItem/jfw-shop',
       resourceId: null,
       tags: [],
-      title: 'Collections',
+      title: 'Shop',
       type: 'HTTP',
       url: '/collections',
       items: [],
     },
     {
-      id: 'gid://shopify/MenuItem/461609533496',
+      id: 'gid://shopify/MenuItem/jfw-collections',
       resourceId: null,
       tags: [],
-      title: 'Blog',
+      title: 'Collections',
       type: 'HTTP',
-      url: '/blogs/journal',
+      url: '/collections/all',
       items: [],
     },
     {
-      id: 'gid://shopify/MenuItem/461609566264',
+      id: 'gid://shopify/MenuItem/jfw-about',
       resourceId: null,
-      tags: [],
-      title: 'Policies',
-      type: 'HTTP',
-      url: '/policies',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609599032',
-      resourceId: 'gid://shopify/Page/92591030328',
       tags: [],
       title: 'About',
-      type: 'PAGE',
+      type: 'HTTP',
       url: '/pages/about',
+      items: [],
+    },
+    {
+      id: 'gid://shopify/MenuItem/jfw-size-guide',
+      resourceId: null,
+      tags: [],
+      title: 'Size Guide',
+      type: 'HTTP',
+      url: '/pages/size-guide',
       items: [],
     },
   ],
 };
-
-function activeLinkStyle({
-  isActive,
-  isPending,
-}: {
-  isActive: boolean;
-  isPending: boolean;
-}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
-  };
-}

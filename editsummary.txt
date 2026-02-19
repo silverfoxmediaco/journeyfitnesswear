@@ -1,0 +1,161 @@
+========================================
+Journey Fitness Wear — Edit Summary
+========================================
+
+Phase 1 — Foundation Setup
+Date: 2026-02-19
+========================================
+
+1. PROJECT SCAFFOLD
+   - Created /Documents/JourneyFitnessWear-shopify/journeyfitnesswear/
+   - Scaffolded Shopify Hydrogen 2026.1.0 with TypeScript via --quickstart
+   - Connected to Mock.shop for development data
+   - React Router 7 + Vite build system
+
+2. DEPENDENCIES INSTALLED
+   - tailwindcss@3 + postcss + autoprefixer — utility-first CSS framework (v3 for Node 18 compat)
+   - framer-motion — animation library for scroll reveals and transitions
+   - lucide-react — icon library (replacing default text icons)
+
+3. TAILWIND CSS CONFIGURATION
+   - File: tailwind.config.cjs — JFW brand theme config:
+     - Colors: jfw-blue (#00CFFF), jfw-black, jfw-white, jfw-dark, jfw-gray, jfw-blue-dark, jfw-blue-glow
+     - Fonts: font-heading (Orbitron), font-body (Poppins)
+     - Shadows: shadow-jfw-glow, shadow-jfw-glow-lg
+   - File: postcss.config.cjs — PostCSS with tailwindcss + autoprefixer
+   - File: app/styles/app.css — replaced default CSS with:
+     - @tailwind base/components/utilities directives
+     - @layer base for global dark-first styles (black bg, white text)
+     - Retained Hydrogen's aside/overlay, cart, search, product, and collection CSS
+     - Restyled all retained CSS for dark theme compatibility
+   - Note: Used .cjs extensions because package.json has "type": "module"
+
+4. GOOGLE FONTS
+   - File: app/root.tsx — added preconnect links for fonts.googleapis.com and fonts.gstatic.com
+   - Added stylesheet link for Orbitron (400-900) and Poppins (300-700)
+   - Added theme-color meta tag (#000000)
+   - Added default meta description for JFW
+   - Added dark class to html element and body Tailwind classes
+
+5. HEADER COMPONENT (app/components/Header.tsx)
+   - Complete rewrite with JFW branding
+   - Fixed position with transparent-to-solid scroll transition (backdrop blur on scroll)
+   - Logo: /logos/JOURNEY800V1BLUE.png
+   - Desktop nav: Orbitron font, uppercase, letter-spacing, cyan underline on active
+   - Lucide icons: Search, User, ShoppingBag, Menu
+   - Cart badge: cyan circle with item count
+   - Mobile hamburger toggle (hidden on md+)
+   - Fallback menu: Shop, Collections, About, Size Guide
+   - Unique classNames: jfw-header, jfw-header-logo, jfw-nav-link, jfw-mobile-nav, etc.
+
+6. FOOTER COMPONENT (app/components/Footer.tsx)
+   - Complete rewrite with JFW branding
+   - 4-column grid: Brand, Shop, Company, Newsletter
+   - Brand column: white logo variant, tagline, social media icons (Lucide)
+   - Social links: Instagram, Facebook, Twitter, YouTube with hover glow
+   - Newsletter signup: email input + submit button
+   - Bottom bar: copyright, Privacy/Terms/Shipping links
+   - Uses Shopify footer menu data for policy links
+   - Unique classNames: jfw-footer, jfw-footer-brand, jfw-social-link, jfw-newsletter-form, etc.
+
+7. PAGE LAYOUT (app/components/PageLayout.tsx)
+   - Updated with header spacer div for fixed header
+   - Restyled search aside: dark input with focus glow
+   - Added min-h-screen to main content area
+   - Retained all Hydrogen Aside patterns (cart, search, mobile menu)
+
+8. ASIDE COMPONENT (app/components/Aside.tsx)
+   - Restyled with JFW dark theme
+   - Lucide X icon for close button
+   - Cyan heading text, gray border styling
+   - Dark background (!bg-jfw-dark)
+
+9. UI COMPONENTS CREATED
+   - app/components/ui/Button.tsx — 4 variants (primary, secondary, outline, ghost), 3 sizes
+   - app/components/ui/Badge.tsx — 3 variants (default, sale, new)
+   - app/components/ui/LoadingSpinner.tsx — animated spinner with cyan accent
+
+10. CONSTANTS
+    - app/lib/constants.ts — site name, tagline, description, brand colors, social links
+
+11. DIRECTORY STRUCTURE CREATED
+    - app/components/layout/
+    - app/components/home/
+    - app/components/product/
+    - app/components/cart/
+    - app/components/account/
+    - app/components/ui/
+    - public/logos/
+
+12. LOGO FILES ADDED TO public/logos/
+    - JOURNEY800V1BLUE.png (header, hero)
+    - JOURNEY800V1WHITE.png (footer)
+    - JOURNEY800V1BLACKBLUE.png (light backgrounds)
+    - jfw600logo.png (favicon/compact)
+    - JOURNEYFITNESSWEAR300.png (bonus)
+    - JOURNEYFITNESSWEAR300SOLID.png (bonus)
+
+========================================
+
+Phase 2 — Home / Landing Page
+Date: 2026-02-19
+========================================
+
+13. HERO BANNER (app/components/home/HeroBanner.tsx)
+    - Full-viewport-height hero section with negative margin to overlap fixed header
+    - Dark gradient background with animated cyan blur accents
+    - Framer Motion entrance animations (fade-in + slide-up, staggered)
+    - Large Orbitron heading: "What's Your Journey?" with cyan accent on "Journey"
+    - Poppins subtext: "Performance wear built for every rep, every mile, every goal."
+    - "SHOP NOW" CTA: cyan bg, glow-lg hover, scale effect, links to /collections
+    - Scroll-down indicator: bouncing chevron + "Scroll" label
+    - Cyan accent line above heading
+    - Unique classNames: jfw-hero, jfw-hero-heading, jfw-hero-cta, jfw-hero-scroll
+
+14. FEATURED COLLECTIONS (app/components/home/FeaturedCollections.tsx)
+    - Section heading: "Shop by Category" with cyan accent
+    - Responsive grid: 1 col mobile, 2 col sm, 3 col lg
+    - Collection cards with:
+      - 4:5 aspect ratio images with hover zoom (scale-110, 500ms)
+      - Gradient overlay (black from bottom)
+      - Orbitron title that turns cyan on hover
+      - Description text (line-clamp-2)
+      - "Explore" CTA that fades in on hover
+      - Cyan border glow on hover + shadow-jfw-glow
+    - Framer Motion staggered reveal on scroll (viewport once)
+    - Fallback placeholder if no collection image
+    - Pulls from Shopify Storefront API via GraphQL
+    - Unique classNames: jfw-featured-collections, jfw-collection-card, jfw-collection-title
+
+15. BRAND STORY (app/components/home/BrandStory.tsx)
+    - Split layout: image left (lg:grid-cols-2), text right
+    - Left: placeholder brand image area with faded logo, cyan accent border detail
+    - Right: "Built for the Journey" heading, brand intro paragraphs, "OUR STORY" CTA
+    - CTA: outline style (border-2 cyan, hover fill), links to /pages/about
+    - Framer Motion slide-in from left/right on scroll
+    - Unique classNames: jfw-brand-story, jfw-brand-image, jfw-brand-text, jfw-brand-cta
+
+16. NEWSLETTER (app/components/home/Newsletter.tsx)
+    - Dark section (bg-jfw-dark) with centered blue blur accent
+    - "Join the Journey" heading with cyan accent
+    - Value prop: "Get 15% off your first order"
+    - Email input + Subscribe button (inline on sm+, stacked on mobile)
+    - Lucide Send icon on button
+    - Framer Motion fade-in on scroll
+    - Unique classNames: jfw-newsletter, jfw-newsletter-signup, jfw-newsletter-email
+
+17. HOME ROUTE REWRITE (app/routes/_index.tsx)
+    - Updated meta: "Journey Fitness Wear | Performance Apparel"
+    - Added meta description for SEO
+    - Updated GraphQL query: fetches 6 collections (was 1) with description field
+    - Fragment renamed: FeaturedCollections (includes id, title, description, handle, image)
+    - Composed page: HeroBanner → FeaturedCollections → BrandStory → Newsletter
+    - Removed old FeaturedCollection/RecommendedProducts inline components
+
+========================================
+BUILD STATUS: PASSING
+NOTES:
+- Node.js v18 detected — recommend upgrading to v20+
+- Mock.shop connected for development; will need real Shopify store credentials
+- Phase 3 (Product Pages) ready to begin
+========================================

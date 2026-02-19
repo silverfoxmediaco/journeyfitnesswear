@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import {X} from 'lucide-react';
 
 type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
 type AsideContextValue = {
@@ -13,16 +14,6 @@ type AsideContextValue = {
   close: () => void;
 };
 
-/**
- * A side bar component with Overlay
- * @example
- * ```jsx
- * <Aside type="search" heading="SEARCH">
- *  <input type="search" />
- *  ...
- * </Aside>
- * ```
- */
 export function Aside({
   children,
   heading,
@@ -59,11 +50,17 @@ export function Aside({
       role="dialog"
     >
       <button className="close-outside" onClick={close} />
-      <aside>
-        <header>
-          <h3>{heading}</h3>
-          <button className="close reset" onClick={close} aria-label="Close">
-            &times;
+      <aside className="!bg-jfw-dark">
+        <header className="!border-b !border-jfw-gray">
+          <h3 className="font-heading text-sm uppercase tracking-[0.2em] text-jfw-blue">
+            {heading}
+          </h3>
+          <button
+            className="jfw-aside-close text-gray-400 hover:text-jfw-blue transition-colors duration-200"
+            onClick={close}
+            aria-label="Close"
+          >
+            <X size={22} />
           </button>
         </header>
         <main>{children}</main>

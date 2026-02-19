@@ -45,7 +45,9 @@ export function PageLayout({
           publicStoreDomain={publicStoreDomain}
         />
       )}
-      <main>{children}</main>
+      {/* Spacer for fixed header */}
+      <div style={{height: 'var(--header-height)'}} />
+      <main className="jfw-main min-h-screen">{children}</main>
       <Footer
         footer={footer}
         header={header}
@@ -58,7 +60,7 @@ export function PageLayout({
 function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
   return (
     <Aside type="cart" heading="CART">
-      <Suspense fallback={<p>Loading cart ...</p>}>
+      <Suspense fallback={<p className="text-gray-400 font-body">Loading cart ...</p>}>
         <Await resolve={cart}>
           {(cart) => {
             return <CartMain cart={cart} layout="aside" />;
@@ -77,19 +79,24 @@ function SearchAside() {
         <br />
         <SearchFormPredictive>
           {({fetchResults, goToSearch, inputRef}) => (
-            <>
+            <div className="flex gap-2 px-2">
               <input
                 name="q"
                 onChange={fetchResults}
                 onFocus={fetchResults}
-                placeholder="Search"
+                placeholder="Search products..."
                 ref={inputRef}
                 type="search"
                 list={queriesDatalistId}
+                className="jfw-search-input flex-1 bg-jfw-gray border border-jfw-gray text-jfw-white text-sm font-body px-4 py-3 rounded-lg focus:outline-none focus:border-jfw-blue focus:shadow-jfw-glow transition-all duration-200 placeholder:text-gray-500"
               />
-              &nbsp;
-              <button onClick={goToSearch}>Search</button>
-            </>
+              <button
+                onClick={goToSearch}
+                className="jfw-search-btn bg-jfw-blue hover:bg-jfw-blue-dark text-jfw-black font-heading text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition-all duration-200 hover:shadow-jfw-glow"
+              >
+                Go
+              </button>
+            </div>
           )}
         </SearchFormPredictive>
 
@@ -98,7 +105,11 @@ function SearchAside() {
             const {articles, collections, pages, products, queries} = items;
 
             if (state === 'loading' && term.current) {
-              return <div>Loading...</div>;
+              return (
+                <div className="p-4 text-gray-400 font-body text-sm">
+                  Loading...
+                </div>
+              );
             }
 
             if (!total) {
@@ -135,11 +146,9 @@ function SearchAside() {
                   <Link
                     onClick={closeSearch}
                     to={`${SEARCH_ENDPOINT}?q=${term.current}`}
+                    className="block p-4 text-jfw-blue hover:underline font-body text-sm"
                   >
-                    <p>
-                      View all results for <q>{term.current}</q>
-                      &nbsp; →
-                    </p>
+                    View all results for <q>{term.current}</q> &rarr;
                   </Link>
                 ) : null}
               </>

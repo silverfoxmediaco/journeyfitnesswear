@@ -53,13 +53,17 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
  */
 export function links() {
   return [
+    {rel: 'preconnect', href: 'https://cdn.shopify.com'},
+    {rel: 'preconnect', href: 'https://shop.app'},
+    {rel: 'preconnect', href: 'https://fonts.googleapis.com'},
     {
       rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
+      href: 'https://fonts.gstatic.com',
+      crossOrigin: 'anonymous' as const,
     },
     {
-      rel: 'preconnect',
-      href: 'https://shop.app',
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
@@ -145,16 +149,21 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
 
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta
+          name="description"
+          content="Journey Fitness Wear — Performance wear built for every rep, every mile, every goal."
+        />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-jfw-black text-jfw-white font-body antialiased">
         {children}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
