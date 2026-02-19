@@ -5,11 +5,20 @@ import {ChevronDown} from 'lucide-react';
 export function HeroBanner() {
   return (
     <section className="jfw-hero relative w-full h-screen flex items-center justify-center overflow-hidden -mt-[var(--header-height)]">
-      {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-jfw-black via-jfw-black/90 to-jfw-dark z-10" />
-
-      {/* Animated background accents */}
+      {/* Background image */}
       <div className="absolute inset-0 z-0">
+        <img
+          src="/images/woman-powerlifting.webp"
+          alt=""
+          className="jfw-hero-bg w-full h-full object-cover object-center"
+        />
+      </div>
+
+      {/* Dark gradient overlay on top of image */}
+      <div className="absolute inset-0 bg-gradient-to-b from-jfw-black/80 via-jfw-black/70 to-jfw-dark/95 z-10" />
+
+      {/* Animated color accents */}
+      <div className="absolute inset-0 z-[11]">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-jfw-blue/5 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-jfw-blue/3 rounded-full blur-3xl" />
       </div>

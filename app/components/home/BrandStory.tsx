@@ -15,14 +15,20 @@ export function BrandStory() {
             transition={{duration: 0.7, ease: 'easeOut'}}
           >
             <div className="aspect-[4/5] rounded-lg overflow-hidden bg-jfw-gray relative">
-              {/* Placeholder — replace with brand lifestyle image */}
-              <div className="absolute inset-0 bg-gradient-to-br from-jfw-dark to-jfw-gray flex items-center justify-center">
-                <img
-                  src="/logos/JOURNEY800V1BLUE.png"
-                  alt="Journey Fitness Wear"
-                  className="w-48 md:w-64 opacity-20"
-                />
-              </div>
+              {/* Desktop image */}
+              <img
+                src="/images/Planking.webp"
+                alt="Athletes doing planks — Journey Fitness Wear"
+                className="jfw-brand-image-desktop w-full h-full object-cover hidden md:block"
+              />
+              {/* Mobile image */}
+              <img
+                src="/images/mobilePlanking.webp"
+                alt="Athletes doing planks — Journey Fitness Wear"
+                className="jfw-brand-image-mobile w-full h-full object-cover md:hidden"
+              />
+              {/* Subtle gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-jfw-black/30 to-transparent" />
             </div>
             {/* Cyan accent detail */}
             <div className="absolute -bottom-4 -right-4 w-24 h-24 border-2 border-jfw-blue/20 rounded-lg hidden lg:block" />

@@ -4,10 +4,20 @@ import {Send} from 'lucide-react';
 export function Newsletter() {
   return (
     <section className="jfw-newsletter py-20 md:py-28 bg-jfw-dark relative overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/images/dumbbellrows.webp"
+          alt=""
+          className="jfw-newsletter-bg w-full h-full object-cover opacity-10"
+        />
+      </div>
+      {/* Dark overlay to ensure text readability */}
+      <div className="absolute inset-0 bg-jfw-dark/80 z-[1]" />
       {/* Background accent */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-jfw-blue/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-jfw-blue/5 rounded-full blur-3xl z-[2]" />
 
-      <div className="relative max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center">
         <motion.div
           initial={{opacity: 0, y: 20}}
           whileInView={{opacity: 1, y: 0}}

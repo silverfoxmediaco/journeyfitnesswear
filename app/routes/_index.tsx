@@ -2,6 +2,7 @@ import {useLoaderData} from 'react-router';
 import type {Route} from './+types/_index';
 import {HeroBanner} from '~/components/home/HeroBanner';
 import {FeaturedCollections} from '~/components/home/FeaturedCollections';
+import {MotivationBanner} from '~/components/home/MotivationBanner';
 import {BrandStory} from '~/components/home/BrandStory';
 import {Newsletter} from '~/components/home/Newsletter';
 
@@ -38,6 +39,7 @@ export default function Homepage() {
     <div className="jfw-homepage">
       <HeroBanner />
       <FeaturedCollections collections={data.collections} />
+      <MotivationBanner />
       <BrandStory />
       <Newsletter />
     </div>

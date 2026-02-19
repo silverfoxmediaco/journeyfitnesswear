@@ -299,6 +299,60 @@ Date: 2026-02-19
     - Unique classNames: jfw-cart-page, jfw-cart-header
 
 ========================================
+
+Image Integration — Homepage Lifestyle Photos
+Date: 2026-02-19
+========================================
+
+33. HERO BANNER UPDATE (app/components/home/HeroBanner.tsx)
+    - Added woman-powerlifting.webp as full-bleed background image
+    - Dark gradient overlay (from-black/80 via-black/70 to-dark/95) for text readability
+    - Animated cyan blur accents moved to z-[11] above overlay
+    - Background image uses object-cover object-center for responsive fill
+    - Unique classNames added: jfw-hero-bg
+
+34. BRAND STORY UPDATE (app/components/home/BrandStory.tsx)
+    - Replaced placeholder logo with real lifestyle photography
+    - Desktop: Planking.webp (hidden md:block)
+    - Mobile: mobilePlanking.webp (md:hidden)
+    - Added subtle gradient overlay (from-black/30 to-transparent) from bottom
+    - Removed old placeholder gradient + faded logo
+    - Unique classNames: jfw-brand-image-desktop, jfw-brand-image-mobile
+
+35. MOTIVATION BANNER — NEW (app/components/home/MotivationBanner.tsx)
+    - Full-width image break section placed between FeaturedCollections and BrandStory
+    - Desktop: kettleballs.webp (500-550px height, hidden md:block)
+    - Mobile: kettleballsmobile.webp (450px height, md:hidden)
+    - Dark gradient overlay (from-black/85 via-black/60 to-black/40) — left-heavy for text
+    - Content: left-aligned "Push Your Limits" heading with cyan accent
+    - Motivational subtext + "Shop Collections" cyan CTA button
+    - Framer Motion slide-in from left on scroll
+    - Unique classNames: jfw-motivation-banner, jfw-motivation-bg-desktop,
+      jfw-motivation-bg-mobile, jfw-motivation-content, jfw-motivation-accent,
+      jfw-motivation-heading, jfw-motivation-text, jfw-motivation-cta
+
+36. NEWSLETTER UPDATE (app/components/home/Newsletter.tsx)
+    - Added dumbbellrows.webp as subtle background image (10% opacity)
+    - Dark overlay (bg-jfw-dark/80) for text readability
+    - Content wrapper z-index bumped to z-10 to sit above all bg layers
+    - Cyan blur accent at z-[2] between overlay and content
+    - Unique className: jfw-newsletter-bg
+
+37. HOMEPAGE ROUTE UPDATE (app/routes/_index.tsx)
+    - Added MotivationBanner import
+    - Page flow: HeroBanner → FeaturedCollections → MotivationBanner → BrandStory → Newsletter
+
+IMAGE USAGE MAP:
+    - woman-powerlifting.webp → Hero Banner background
+    - Planking.webp → Brand Story (desktop)
+    - mobilePlanking.webp → Brand Story (mobile)
+    - kettleballs.webp → Motivation Banner (desktop)
+    - kettleballsmobile.webp → Motivation Banner (mobile)
+    - dumbbellrows.webp → Newsletter subtle background
+    - dumbbell-raises.webp → Available (About Us page / Phase 5)
+    - mobiledumbbellrows.webp → Available (About Us mobile / Phase 5)
+
+========================================
 BUILD STATUS: PASSING
 NOTES:
 - Node.js v18 detected — recommend upgrading to v20+
