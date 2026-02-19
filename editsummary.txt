@@ -152,6 +152,13 @@ Date: 2026-02-19
     - Composed page: HeroBanner → FeaturedCollections → BrandStory → Newsletter
     - Removed old FeaturedCollection/RecommendedProducts inline components
 
+18. HEADER REDESIGN — WHITE BACKGROUND
+    - Switched header background from black/transparent to white (#FFFFFF)
+    - Swapped logo from JOURNEY800V1BLUE.png to JOURNEY800V1BLACKBLUE.png
+    - Changed all nav link text color from white to black (hover remains cyan)
+    - Changed all icon colors (search, account, cart, mobile toggle) from white to black
+    - Scroll state: adds subtle shadow + gray-200 border on scroll (no color change)
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:

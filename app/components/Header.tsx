@@ -37,10 +37,10 @@ export function Header({
 
   return (
     <header
-      className={`jfw-header fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`jfw-header fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-jfw-white ${
         scrolled
-          ? 'bg-jfw-black/95 backdrop-blur-md shadow-lg border-b border-jfw-gray'
-          : 'bg-transparent'
+          ? 'shadow-lg border-b border-gray-200'
+          : ''
       }`}
       style={{height: 'var(--header-height)'}}
     >
@@ -53,7 +53,7 @@ export function Header({
           end
         >
           <img
-            src="/logos/JOURNEY800V1BLUE.png"
+            src="/logos/JOURNEY800V1BLACKBLUE.png"
             alt={shop.name || 'Journey Fitness Wear'}
             className="h-10 md:h-12 w-auto"
           />
@@ -159,7 +159,7 @@ export function HeaderMenu({
               `jfw-nav-link font-heading text-xs uppercase tracking-[0.2em] transition-all duration-200 relative py-1 ${
                 isActive
                   ? 'text-jfw-blue'
-                  : 'text-jfw-white hover:text-jfw-blue'
+                  : 'text-jfw-black hover:text-jfw-blue'
               }`
             }
           >
@@ -193,7 +193,7 @@ function HeaderCtas({
       <NavLink
         prefetch="intent"
         to="/account"
-        className="jfw-account-link text-jfw-white hover:text-jfw-blue transition-colors duration-200 hidden sm:block"
+        className="jfw-account-link text-jfw-black hover:text-jfw-blue transition-colors duration-200 hidden sm:block"
         aria-label="Account"
       >
         <User size={22} strokeWidth={1.5} />
@@ -208,7 +208,7 @@ function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
     <button
-      className="jfw-mobile-toggle md:hidden text-jfw-white hover:text-jfw-blue transition-colors duration-200"
+      className="jfw-mobile-toggle md:hidden text-jfw-black hover:text-jfw-blue transition-colors duration-200"
       onClick={() => open('mobile')}
       aria-label="Open menu"
     >
@@ -221,7 +221,7 @@ function SearchToggle() {
   const {open} = useAside();
   return (
     <button
-      className="jfw-search-toggle text-jfw-white hover:text-jfw-blue transition-colors duration-200"
+      className="jfw-search-toggle text-jfw-black hover:text-jfw-blue transition-colors duration-200"
       onClick={() => open('search')}
       aria-label="Search"
     >
@@ -237,7 +237,7 @@ function CartBadge({count}: {count: number | null}) {
   return (
     <a
       href="/cart"
-      className="jfw-cart-badge relative text-jfw-white hover:text-jfw-blue transition-colors duration-200"
+      className="jfw-cart-badge relative text-jfw-black hover:text-jfw-blue transition-colors duration-200"
       onClick={(e) => {
         e.preventDefault();
         open('cart');
