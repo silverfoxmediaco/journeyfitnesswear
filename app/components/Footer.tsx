@@ -126,6 +126,15 @@ export function Footer({
                         About Us
                       </NavLink>
                     </li>
+                    <li>
+                      <NavLink
+                        to="/pages/contact"
+                        prefetch="intent"
+                        className="jfw-footer-link font-body text-sm text-gray-400 hover:text-jfw-white transition-colors duration-200"
+                      >
+                        Contact Us
+                      </NavLink>
+                    </li>
                     {footer?.menu &&
                       header.shop.primaryDomain?.url &&
                       footer.menu.items.map((item) => {

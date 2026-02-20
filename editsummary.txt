@@ -424,6 +424,59 @@ UPDATED IMAGE USAGE MAP:
     - mobiledumbbellrows.webp → About Us brand origin section
 
 ========================================
+
+Contact Us Page
+Date: 2026-02-19
+========================================
+
+39. CONTACT PAGE ROUTE — NEW (app/routes/pages.contact.tsx)
+    - Dedicated route at /pages/contact (takes priority over pages.$handle catch-all)
+    - SEO meta: "Journey Fitness Wear | Contact Us" + description
+
+    Section 1 — Contact Hero:
+    - Dark section (bg-jfw-dark) with animated cyan blur accents
+    - "Get in Touch" Orbitron heading with cyan accent on "Touch"
+    - Subtext about questions, feedback, partnerships
+    - Framer Motion fade-in + slide-up entrance
+    - Unique classNames: jfw-contact-hero, jfw-contact-hero-accent,
+      jfw-contact-hero-heading, jfw-contact-hero-subtext
+
+    Section 2 — Contact Content (5-column grid):
+    - Left 3 columns: Contact Form
+      - Dark card (bg-jfw-dark, border, rounded-xl)
+      - "Send Us a Message" heading + helper text
+      - Fields: Name + Email (side-by-side on sm+), Subject (dropdown select),
+        Message (textarea, 6 rows)
+      - Subject options: Order Inquiry, Sizing & Fit, Returns & Exchanges,
+        Wholesale / Partnerships, Other
+      - All inputs: dark bg, gray border, cyan focus ring
+      - Labels: Orbitron 10px uppercase tracking
+      - Submit: full-width cyan "Send Message" button with Send icon, glow hover
+      - Success state: Mail icon in cyan circle, "Message Sent" heading,
+        "We'll get back to you within 24-48 hours" message
+      - Uses React useState for form submission state
+      - Unique classNames: jfw-contact-form-wrapper, jfw-contact-form,
+        jfw-contact-form-heading, jfw-contact-label, jfw-contact-input,
+        jfw-contact-select, jfw-contact-textarea, jfw-contact-submit,
+        jfw-contact-success
+
+    - Right 2 columns: Contact Info Sidebar
+      - 4 info cards (all bg-jfw-dark, border, rounded-xl):
+        1. Email Us — Mail icon, support@journeyfitnesswear.com (clickable mailto)
+        2. Response Time — Clock icon, "24-48 hours during business days"
+        3. Based In — MapPin icon, "United States", "Shipping worldwide via Printful"
+        4. Follow Us — Social icons (Instagram, Facebook, Twitter, YouTube)
+           with circular hover glow buttons, uses SOCIAL_LINKS from constants.ts
+      - Lucide icons: Mail, Clock, MapPin, Instagram, Facebook, Twitter, Youtube
+      - Unique classNames: jfw-contact-info-wrapper, jfw-contact-info,
+        jfw-contact-info-card, jfw-contact-info-icon, jfw-contact-social,
+        jfw-contact-social-link
+
+40. FOOTER UPDATE (app/components/Footer.tsx)
+    - Added "Contact Us" link to Company column (below "About Us")
+    - Links to /pages/contact with prefetch="intent"
+
+========================================
 BUILD STATUS: PASSING
 NOTES:
 - Node.js v18 detected — recommend upgrading to v20+
