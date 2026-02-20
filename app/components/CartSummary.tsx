@@ -14,7 +14,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
   return (
     <div
       aria-labelledby="cart-summary"
-      className={`jfw-cart-summary ${layout === 'page' ? 'jfw-cart-summary-page mt-10 p-6 md:p-8 bg-jfw-dark border border-jfw-gray rounded-xl' : 'jfw-cart-summary-aside mt-6 pt-6 border-t border-jfw-gray'}`}
+      className={`jfw-cart-summary ${layout === 'page' ? 'jfw-cart-summary-page cart-summary-page mt-10 p-6 md:p-8 bg-jfw-dark border border-jfw-gray rounded-xl' : 'jfw-cart-summary-aside cart-summary-aside'}`}
     >
       {/* Subtotal */}
       <div className="jfw-cart-subtotal flex items-center justify-between mb-4">

@@ -93,7 +93,7 @@ aside {
   right: calc(-1 * var(--aside-width));
   top: 0;
   transition: transform 200ms ease-in-out;
-  z-index: 50;
+  z-index: 60;
 }
 
 aside header {
@@ -150,7 +150,7 @@ aside li {
   top: 0;
   transition: opacity 400ms ease-in-out;
   visibility: hidden;
-  z-index: 40;
+  z-index: 55;
 }
 
 .overlay .close-outside {

@@ -50,7 +50,7 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
   const childrenMap = getLineItemChildrenMap(cart?.lines?.nodes ?? []);
 
   return (
-    <div className={`jfw-cart-main ${withDiscount ? 'jfw-cart-with-discount' : ''}`}>
+    <div className={`jfw-cart-main cart-main ${withDiscount ? 'jfw-cart-with-discount with-discount' : ''}`}>
       <CartEmpty hidden={linesCount} layout={layout} />
 
       <div className="jfw-cart-details">
