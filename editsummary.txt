@@ -477,9 +477,67 @@ Date: 2026-02-19
     - Links to /pages/contact with prefetch="intent"
 
 ========================================
+
+Misc Fixes & Enhancements
+Date: 2026-02-20
+========================================
+
+41. FAVICON UPDATE (app/root.tsx)
+    - Changed from default Hydrogen SVG → /logos/JOURNEYFITNESSWEAR300SOLID.png
+    - rel='icon' type='image/png'
+
+42. COLOR SWATCH FIX (app/components/ProductForm.tsx)
+    - Added COLOR_MAP: 70+ Printful color names mapped to hex values
+    - Updated ProductOptionSwatch: falls back to COLOR_MAP when no Shopify swatch metadata
+    - Shows colored circle (20px) + label name for color options
+    - Detects color options via swatch data or COLOR_MAP match
+
+43. PRODUCT IMAGE GALLERY (app/components/ProductImage.tsx)
+    - Complete rewrite: single image → full gallery with thumbnail grid
+    - Main image: aspect-square with hover zoom (scale-105)
+    - Thumbnail grid: 4-5 columns, clickable, cyan active border + glow
+    - useState for selectedImage tracking
+    - Accepts new `images` prop (array of all product images)
+    - Unique classNames: jfw-product-gallery, jfw-product-image-main,
+      jfw-product-thumbnails, jfw-product-thumbnail
+
+44. QUANTITY SELECTOR (app/components/ProductForm.tsx)
+    - Added quantity selector with useState(1)
+    - Inline flex: minus button, center display, plus button
+    - Lucide Minus/Plus icons, rounded-lg border
+    - Hover: cyan text + subtle bg, disabled state at 30% opacity
+    - Quantity passed to AddToCartButton lines array
+    - Unique classNames: jfw-quantity-selector, jfw-qty-decrease,
+      jfw-qty-display, jfw-qty-increase
+
+45. RECOMMENDED PRODUCTS — NEW (app/components/product/RecommendedProducts.tsx)
+    - "You May Also Like" section with cyan accent heading
+    - Responsive grid: 2 cols mobile, 3 md, 4 lg
+    - Up to 4 product cards with Image, title, "From $X.XX" pricing
+    - Hover: cyan border glow + image zoom (scale-110)
+    - Uses Shopify productRecommendations API
+    - Unique classNames: jfw-recommended-products, jfw-recommended-grid,
+      jfw-recommended-card, jfw-recommended-image, jfw-recommended-title,
+      jfw-recommended-price
+
+46. PRODUCT DETAIL UPDATES (app/routes/products.$handle.tsx)
+    - Added images(first: 20) to PRODUCT_FRAGMENT GraphQL query
+    - Added RECOMMENDED_PRODUCTS_QUERY using productId
+    - Restructured loader: criticalData first, then deferred recommendations
+    - Component uses <Suspense> + <Await> for deferred recommended products
+    - Passes product.images?.nodes to ProductImage component
+
+47. COLLECTIONS INDEX GRID CENTERING (app/routes/collections._index.tsx)
+    - Wrapped PaginatedResourceSection in max-w-4xl mx-auto container
+    - Removed lg:grid-cols-3 (only 2 collections: Men's & Women's)
+    - Grid: 1 col mobile, 2 col sm, gap-6 md:gap-8
+    - Matches homepage FeaturedCollections centering approach
+    - Unique className: jfw-collections-grid-wrapper
+
+========================================
 BUILD STATUS: PASSING
 NOTES:
-- Node.js v18 detected — recommend upgrading to v20+
-- Mock.shop connected for development; will need real Shopify store credentials
+- Live at journeyfitnesswear.com via Shopify Oxygen
+- .env configured with real Shopify credentials (not committed)
 - Phase 6 (Customer Accounts & Loyalty) ready to begin
 ========================================

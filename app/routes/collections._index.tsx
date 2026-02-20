@@ -57,10 +57,11 @@ export default function Collections() {
         </div>
 
         {/* Collections Grid */}
-        <PaginatedResourceSection<CollectionFragment>
-          connection={collections}
-          resourcesClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-        >
+        <div className="jfw-collections-grid-wrapper max-w-4xl mx-auto">
+          <PaginatedResourceSection<CollectionFragment>
+            connection={collections}
+            resourcesClassName="jfw-collections-grid grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 mb-12"
+          >
           {({node: collection, index}) => (
             <CollectionItem
               key={collection.id}
@@ -69,6 +70,7 @@ export default function Collections() {
             />
           )}
         </PaginatedResourceSection>
+        </div>
       </div>
     </div>
   );
