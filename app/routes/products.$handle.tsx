@@ -14,17 +14,30 @@ import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {RecommendedProducts} from '~/components/product/RecommendedProducts';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {getSeoMeta, getProductJsonLd} from '~/lib/seo';
 
 export const meta: Route.MetaFunction = ({data}) => {
+  const product = data?.product;
+  const variant = product?.selectedOrFirstAvailableVariant;
   return [
-    {title: `Journey Fitness Wear | ${data?.product.title ?? ''}`},
+    ...getSeoMeta({
+      title: `Journey Fitness Wear | ${product?.title ?? ''}`,
+      description: product?.description || `Shop ${product?.title} at Journey Fitness Wear.`,
+      url: `https://journeyfitnesswear.com/products/${product?.handle}`,
+      image: variant?.image?.url || product?.featuredImage?.url,
+      type: 'product',
+    }),
     {
-      name: 'description',
-      content: data?.product.description || `Shop ${data?.product.title} at Journey Fitness Wear.`,
-    },
-    {
-      rel: 'canonical',
-      href: `/products/${data?.product.handle}`,
+      'script:ld+json': getProductJsonLd({
+        name: product?.title ?? '',
+        description: product?.description ?? '',
+        url: `https://journeyfitnesswear.com/products/${product?.handle}`,
+        image: variant?.image?.url,
+        price: variant?.price?.amount ?? '0',
+        currency: variant?.price?.currencyCode ?? 'USD',
+        availability: variant?.availableForSale ?? false,
+        sku: variant?.sku ?? undefined,
+      }),
     },
   ];
 };

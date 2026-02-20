@@ -252,7 +252,7 @@ function CartBadge({count}: {count: number | null}) {
     >
       <ShoppingBag size={22} strokeWidth={1.5} />
       {count !== null && count > 0 && (
-        <span className="jfw-cart-count absolute -top-2 -right-2 bg-jfw-blue text-jfw-black text-[10px] font-body font-bold w-5 h-5 rounded-full flex items-center justify-center">
+        <span className="jfw-cart-count absolute -top-2 -right-2 bg-jfw-blue text-jfw-black text-[10px] font-body font-bold w-5 h-5 rounded-full flex items-center justify-center" aria-live="polite" aria-atomic="true">
           {count}
         </span>
       )}

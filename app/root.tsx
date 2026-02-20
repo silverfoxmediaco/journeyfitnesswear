@@ -1,5 +1,6 @@
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 import {
+  Link,
   Outlet,
   useRouteError,
   isRouteErrorResponse,
@@ -16,6 +17,7 @@ import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from './components/PageLayout';
+import {getOrganizationJsonLd} from '~/lib/seo';
 
 export type RootLoader = typeof loader;
 
@@ -164,7 +166,19 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <Links />
       </head>
       <body className="bg-jfw-black text-jfw-white font-body antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-jfw-blue focus:text-jfw-black focus:px-4 focus:py-2 focus:rounded-lg focus:font-heading focus:text-sm focus:uppercase focus:tracking-wider"
+        >
+          Skip to content
+        </a>
         {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(getOrganizationJsonLd()),
+          }}
+        />
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
@@ -204,15 +218,47 @@ export function ErrorBoundary() {
     errorMessage = error.message;
   }
 
+  const is404 = errorStatus === 404;
+
   return (
-    <div className="route-error">
-      <h1>Oops</h1>
-      <h2>{errorStatus}</h2>
-      {errorMessage && (
-        <fieldset>
-          <pre>{errorMessage}</pre>
-        </fieldset>
-      )}
+    <div className="jfw-error-page relative flex flex-col items-center justify-center min-h-screen text-center px-4 overflow-hidden">
+      {/* Cyan blur accent */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-jfw-blue/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative z-10">
+        {/* Status Code */}
+        <h1 className="jfw-error-status font-heading text-8xl md:text-9xl text-jfw-blue tracking-[0.2em] mb-4">
+          {errorStatus}
+        </h1>
+
+        {/* Heading */}
+        <h2 className="jfw-error-heading font-heading text-2xl md:text-3xl uppercase tracking-[0.15em] text-jfw-white mb-4">
+          {is404 ? 'Page Not Found' : 'Something Went Wrong'}
+        </h2>
+
+        {/* Description */}
+        <p className="jfw-error-desc font-body text-base text-gray-400 max-w-md mx-auto mb-10">
+          {is404
+            ? "The page you're looking for doesn't exist or has been moved. Let's get you back on track."
+            : errorMessage}
+        </p>
+
+        {/* CTAs */}
+        <div className="jfw-error-ctas flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link
+            to="/"
+            className="jfw-error-cta-primary inline-flex items-center gap-2 bg-jfw-blue hover:bg-jfw-blue-dark text-jfw-black font-heading text-sm uppercase tracking-[0.2em] px-8 py-4 rounded-lg transition-all duration-300 hover:shadow-jfw-glow-lg hover:scale-105"
+          >
+            Back to Home
+          </Link>
+          <Link
+            to="/collections"
+            className="jfw-error-cta-outline inline-flex items-center gap-2 border-2 border-jfw-blue text-jfw-blue font-heading text-sm uppercase tracking-[0.2em] px-8 py-4 rounded-lg transition-all duration-300 hover:bg-jfw-blue hover:text-jfw-black hover:shadow-jfw-glow-lg"
+          >
+            Shop Collections
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

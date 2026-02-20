@@ -8,7 +8,7 @@ import type {
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
 import type {ProductFragment} from 'storefrontapi.generated';
-import {Minus, Plus} from 'lucide-react';
+import {Minus, Plus, Ruler} from 'lucide-react';
 
 export function ProductForm({
   productOptions,
@@ -24,6 +24,8 @@ export function ProductForm({
     <div className="jfw-product-form space-y-6">
       {productOptions.map((option) => {
         if (option.optionValues.length === 1) return null;
+
+        const isSizeOption = option.name.toLowerCase() === 'size';
 
         return (
           <div className="jfw-product-options" key={option.name}>
@@ -94,6 +96,16 @@ export function ProductForm({
                 }
               })}
             </div>
+            {isSizeOption && (
+              <Link
+                to="/pages/size-guide"
+                prefetch="intent"
+                className="jfw-size-guide-link inline-flex items-center gap-1.5 mt-2 font-body text-xs text-gray-500 hover:text-jfw-blue transition-colors duration-200"
+              >
+                <Ruler size={12} />
+                Size Guide
+              </Link>
+            )}
           </div>
         );
       })}

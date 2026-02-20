@@ -38,6 +38,16 @@
   img {
     border-radius: 4px;
   }
+
+  /* Focus-visible ring for all interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    @apply outline-2 outline-offset-2 outline-jfw-blue;
+  }
 }
 
 /* ============================================

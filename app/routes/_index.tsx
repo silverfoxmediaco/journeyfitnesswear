@@ -5,16 +5,15 @@ import {FeaturedCollections} from '~/components/home/FeaturedCollections';
 import {MotivationBanner} from '~/components/home/MotivationBanner';
 import {BrandStory} from '~/components/home/BrandStory';
 import {Newsletter} from '~/components/home/Newsletter';
+import {getSeoMeta} from '~/lib/seo';
 
 export const meta: Route.MetaFunction = () => {
-  return [
-    {title: 'Journey Fitness Wear | Performance Apparel'},
-    {
-      name: 'description',
-      content:
-        'Performance wear built for every rep, every mile, every goal. Shop bold, athletic fitness apparel from Journey Fitness Wear.',
-    },
-  ];
+  return getSeoMeta({
+    title: 'Journey Fitness Wear | Performance Apparel',
+    description:
+      'Performance wear built for every rep, every mile, every goal. Shop bold, athletic fitness apparel from Journey Fitness Wear.',
+    url: 'https://journeyfitnesswear.com',
+  });
 };
 
 export async function loader(args: Route.LoaderArgs) {

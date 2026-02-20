@@ -2,9 +2,16 @@ import {useLoaderData} from 'react-router';
 import type {Route} from './+types/blogs.$blogHandle.$articleHandle';
 import {Image} from '@shopify/hydrogen';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {getSeoMeta} from '~/lib/seo';
 
 export const meta: Route.MetaFunction = ({data}) => {
-  return [{title: `Hydrogen | ${data?.article.title ?? ''} article`}];
+  const article = data?.article;
+  return getSeoMeta({
+    title: `Journey Fitness Wear | ${article?.title ?? ''}`,
+    description: article?.seo?.description || `Read ${article?.title} on the Journey Fitness Wear blog.`,
+    image: article?.image?.url,
+    type: 'article',
+  });
 };
 
 export async function loader(args: Route.LoaderArgs) {

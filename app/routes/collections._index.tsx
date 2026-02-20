@@ -3,16 +3,15 @@ import type {Route} from './+types/collections._index';
 import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import type {CollectionFragment} from 'storefrontapi.generated';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {getSeoMeta} from '~/lib/seo';
 
 export const meta: Route.MetaFunction = () => {
-  return [
-    {title: 'Journey Fitness Wear | Collections'},
-    {
-      name: 'description',
-      content:
-        'Shop all Journey Fitness Wear collections. Performance apparel built for every rep, every mile, every goal.',
-    },
-  ];
+  return getSeoMeta({
+    title: 'Journey Fitness Wear | Collections',
+    description:
+      'Shop all Journey Fitness Wear collections. Performance apparel built for every rep, every mile, every goal.',
+    url: 'https://journeyfitnesswear.com/collections',
+  });
 };
 
 export async function loader(args: Route.LoaderArgs) {

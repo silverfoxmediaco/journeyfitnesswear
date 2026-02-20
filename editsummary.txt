@@ -535,9 +535,215 @@ Date: 2026-02-20
     - Unique className: jfw-collections-grid-wrapper
 
 ========================================
+
+Phase 6 — Remaining Build (Branding, Pages, SEO, Accessibility)
+Date: 2026-02-20
+========================================
+
+BATCH 1: FIX "HYDROGEN" BRANDING + STYLE POLICY PAGES
+
+48. META TITLE FIXES (9 files)
+    - Replaced "Hydrogen" with "Journey Fitness Wear" in:
+      - app/routes/search.tsx
+      - app/routes/blogs._index.tsx
+      - app/routes/blogs.$blogHandle._index.tsx
+      - app/routes/blogs.$blogHandle.$articleHandle.tsx
+      - app/routes/pages.$handle.tsx
+      - app/routes/policies.$handle.tsx
+      - app/routes/account.profile.tsx
+      - app/routes/account.addresses.tsx
+      - app/routes/account.orders._index.tsx
+
+49. POLICY DETAIL PAGE (app/routes/policies.$handle.tsx)
+    - JFW page header: cyan accent line + Orbitron title
+    - Back link with ArrowLeft Lucide icon
+    - Policy body: prose-invert styling with cyan links, heading styles
+    - Unique classNames: jfw-policy-page, jfw-policy-back, jfw-policy-header,
+      jfw-policy-heading, jfw-policy-body
+
+50. POLICIES INDEX (app/routes/policies._index.tsx)
+    - "Our Policies" heading with cyan accent, centered
+    - Policy links as dark cards (bg-jfw-dark, border, rounded-xl)
+    - Hover: cyan border glow + text color change
+    - ArrowRight icon on "Read more" links
+    - Added meta function with title + description
+    - Unique classNames: jfw-policies-page, jfw-policies-header,
+      jfw-policies-heading, jfw-policies-grid, jfw-policy-card
+
+BATCH 2: STYLED 404 ERROR PAGE
+
+51. ERROR BOUNDARY (app/root.tsx)
+    - Large Orbitron status code in cyan (text-8xl/9xl)
+    - "Page Not Found" heading + friendly description
+    - Two CTAs: "Back to Home" (primary cyan) + "Shop Collections" (outline)
+    - Cyan blur accent background decoration
+    - Dynamic messaging: 404 vs generic error
+    - Unique classNames: jfw-error-page, jfw-error-status, jfw-error-heading,
+      jfw-error-desc, jfw-error-ctas, jfw-error-cta-primary, jfw-error-cta-outline
+
+BATCH 3: COLLECTION SORT/FILTER
+
+52. COLLECTION SORT (app/routes/collections.$handle.tsx)
+    - Updated GraphQL query: added $sortKey (ProductCollectionSortKeys) and
+      $reverse (Boolean) variables
+    - SORT_OPTIONS map: best-selling, price-asc, price-desc, newest, a-z, z-a
+    - Loader parses ?sort= URL param and passes to GraphQL
+    - Sort toolbar above product grid: product count (left) + sort dropdown (right)
+    - Dropdown styled with JFW dark inputs (bg-jfw-dark, border, cyan focus)
+    - Custom chevron SVG for select appearance
+    - Uses useNavigate + useSearchParams for URL-based sort
+    - Unique classNames: jfw-sort-toolbar, jfw-sort-count, jfw-sort-select-wrapper,
+      jfw-sort-select
+
+BATCH 4: SIZE GUIDE PAGE
+
+53. SIZE GUIDE — NEW (app/routes/pages.size-guide.tsx)
+    - Dedicated route at /pages/size-guide
+    - SEO meta: "Journey Fitness Wear | Size Guide"
+    - Hero section with cyan blur accent + heading
+    - Gender tab selector: Men's / Women's (useState toggle)
+    - Measurement toggle: Inches / CM
+    - Size chart tables for: T-Shirts, Tank Tops, Hoodies, Joggers
+      (both Men's and Women's, Printful standard sizing)
+    - Tables: dark bg, gray borders, cyan header row, alternating row colors,
+      horizontal scroll on mobile
+    - "How to Measure" section: 5 measurement instructions (Chest, Waist, Hip,
+      Inseam, Sleeve) in dark cards
+    - "Need Help?" CTA linking to /pages/contact
+    - ARIA: role="tablist", role="tab", aria-selected, aria-controls,
+      role="tabpanel", aria-labelledby
+    - Lucide icons: Ruler, HelpCircle, ArrowRight
+    - Unique classNames: jfw-size-guide-page, jfw-size-guide-hero,
+      jfw-size-guide-heading, jfw-size-guide-tables, jfw-size-guide-controls,
+      jfw-size-guide-tabs, jfw-size-tab, jfw-size-unit-toggle, jfw-unit-btn,
+      jfw-size-guide-panels, jfw-size-chart, jfw-size-table, jfw-how-to-measure,
+      jfw-measure-list, jfw-measure-item, jfw-size-guide-cta,
+      jfw-size-guide-contact-btn
+
+54. SIZE GUIDE LINK (app/components/ProductForm.tsx)
+    - Added Ruler Lucide icon import
+    - "Size Guide" link appears below size option pills (detected via
+      option.name.toLowerCase() === 'size')
+    - Styled: inline-flex, gray text, hover turns cyan
+    - Unique className: jfw-size-guide-link
+
+BATCH 5: CUSTOMER ACCOUNT RESTYLING (5 ROUTES)
+
+55. ACCOUNT LAYOUT (app/routes/account.tsx)
+    - Welcome heading with customer name in cyan
+    - Desktop: sidebar nav (left, 64px wide, sticky) + content area (right)
+    - Mobile: horizontal scrolling tab bar with overflow-x-auto
+    - NavLinks: Orders (Package icon), Profile (User icon), Addresses (MapPin icon)
+    - Cyan active states (bg-jfw-blue/10, text-jfw-blue, border)
+    - Sign Out button: LogOut icon, hover turns red-400
+    - Lucide icons: Package, User, MapPin, LogOut
+    - Unique classNames: jfw-account-layout, jfw-account-header, jfw-account-heading,
+      jfw-account-nav, jfw-account-nav-inner, jfw-account-nav-link,
+      jfw-account-mobile-nav, jfw-account-mobile-tab, jfw-account-logout-btn,
+      jfw-account-mobile-logout, jfw-account-content
+
+56. PROFILE (app/routes/account.profile.tsx)
+    - Dark card container (bg-jfw-dark, border, rounded-xl)
+    - JFW styled inputs (first/last name side-by-side)
+    - Labels: Orbitron 10px uppercase tracking
+    - Success state: green Check icon + message (aria-live="polite")
+    - Error state: red text with role="alert"
+    - Save button: primary cyan, disabled state
+    - Lucide icon: Check
+    - Unique classNames: jfw-account-profile, jfw-profile-card, jfw-profile-label,
+      jfw-profile-input, jfw-profile-error, jfw-profile-success, jfw-profile-save
+
+57. ADDRESSES (app/routes/account.addresses.tsx)
+    - Address cards in grid: 1 col mobile, 2 col lg
+    - JFW styled form inputs matching contact form pattern
+    - "Default" cyan badge (bg-jfw-blue/10, rounded-full)
+    - Empty state: MapPin icon + helper text
+    - Add new address section with Plus icon header
+    - Save: primary cyan button, Delete: red outline button
+    - Unique IDs per form field (avoid duplicate IDs)
+    - Lucide icons: Plus, MapPin
+    - Unique classNames: jfw-account-addresses, jfw-addresses-empty,
+      jfw-new-address, jfw-existing-addresses, jfw-address-grid,
+      jfw-address-form, jfw-address-default-badge, jfw-address-label,
+      jfw-address-input, jfw-address-default-check, jfw-address-create,
+      jfw-address-save, jfw-address-delete
+
+58. ORDER HISTORY (app/routes/account.orders._index.tsx)
+    - Styled search form: dark card, side-by-side inputs, Search icon button
+    - Order cards: dark bg, rounded-xl, hover cyan border
+    - Status badges: color-coded (green/yellow/red/gray) based on financial
+      and fulfillment status
+    - Empty state: ShoppingBag icon + "Start Shopping" cyan CTA
+    - Dates formatted with toLocaleDateString
+    - Lucide icons: ShoppingBag, Search, X, ArrowRight
+    - Unique classNames: jfw-account-orders, jfw-order-search,
+      jfw-order-search-input, jfw-order-search-btn, jfw-order-clear-btn,
+      jfw-orders-list, jfw-orders-empty, jfw-orders-empty-cta,
+      jfw-order-item, jfw-order-status, jfw-order-fulfillment
+
+59. ORDER DETAIL (app/routes/account.orders.$id.tsx)
+    - Back link with ArrowLeft icon
+    - Order header: name, date, confirmation number, fulfillment badge
+    - Line items as flex cards (image + title + variant + qty + price)
+    - Order summary card: subtotal, tax, discounts, total (cyan)
+    - Shipping address card with MapPin icon
+    - Fulfillment status card with Truck icon + color-coded badge
+    - "View Order Status on Shopify" external link
+    - Lucide icons: ArrowLeft, ExternalLink, MapPin, Truck
+    - Unique classNames: jfw-order-detail, jfw-order-back, jfw-order-header,
+      jfw-order-detail-status, jfw-order-items, jfw-order-line-card,
+      jfw-order-line-image, jfw-order-summary, jfw-order-shipping,
+      jfw-order-status-link
+
+BATCH 6: SEO — OG TAGS, TWITTER CARDS, JSON-LD
+
+60. SEO UTILITY — NEW (app/lib/seo.ts)
+    - getSeoMeta(): returns title, description, og:title, og:description,
+      og:image, og:url, og:type, og:site_name, twitter:card, twitter:title,
+      twitter:description, twitter:image
+    - getProductJsonLd(): Product schema (name, description, price, availability,
+      brand, sku, offers)
+    - getOrganizationJsonLd(): Organization schema (name, url, logo, sameAs social links)
+    - Default OG image: /logos/JOURNEYFITNESSWEAR300SOLID.png
+
+61. OG/TWITTER META APPLIED TO ROUTES
+    - app/routes/_index.tsx — website type
+    - app/routes/products.$handle.tsx — product type + product image
+    - app/routes/blogs.$blogHandle.$articleHandle.tsx — article type + article image
+    - app/routes/collections.$handle.tsx — website type + collection URL
+    - app/routes/collections._index.tsx — website type
+    - app/routes/search.tsx — website type
+    - app/routes/pages.about.tsx — website type
+    - app/routes/pages.contact.tsx — website type
+
+62. JSON-LD STRUCTURED DATA
+    - Product schema on products.$handle.tsx (via meta script:ld+json)
+    - Organization schema in root.tsx Layout (script tag in body)
+
+BATCH 7: ACCESSIBILITY
+
+63. SKIP-TO-CONTENT LINK (app/root.tsx)
+    - sr-only by default, visible on focus
+    - Fixed position, z-100, cyan bg, links to #main-content
+    - Main content target: id="main-content" on <main> in PageLayout.tsx
+
+64. FOCUS-VISIBLE RING (app/styles/app.css)
+    - Added focus-visible outline for a, button, input, select, textarea, [tabindex]
+    - 2px cyan outline with 2px offset
+
+65. ARIA ENHANCEMENTS
+    - Size guide tabs: role="tablist", role="tab", aria-selected, aria-controls,
+      role="tabpanel", aria-labelledby (built into Batch 4)
+    - Cart count badge: aria-live="polite", aria-atomic="true" (Header.tsx)
+    - Contact form success: role="status", aria-live="polite" (pages.contact.tsx)
+    - Profile success/error: role="status"/role="alert", aria-live (account.profile.tsx)
+    - Order list: aria-live="polite" on orders container (account.orders._index.tsx)
+    - Order search form: aria-label="Search orders"
+
+========================================
 BUILD STATUS: PASSING
 NOTES:
 - Live at journeyfitnesswear.com via Shopify Oxygen
 - .env configured with real Shopify credentials (not committed)
-- Phase 6 (Customer Accounts & Loyalty) ready to begin
+- All 7 batches complete — full roadmap implemented
 ========================================

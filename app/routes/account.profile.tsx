@@ -9,6 +9,7 @@ import {
   useOutletContext,
 } from 'react-router';
 import type {Route} from './+types/account.profile';
+import {Check} from 'lucide-react';
 
 export type ActionResponse = {
   error: string | null;
@@ -16,7 +17,7 @@ export type ActionResponse = {
 };
 
 export const meta: Route.MetaFunction = () => {
-  return [{title: 'Profile'}];
+  return [{title: 'Journey Fitness Wear | Profile'}];
 };
 
 export async function loader({context}: Route.LoaderArgs) {
@@ -86,48 +87,79 @@ export default function AccountProfile() {
   const customer = action?.customer ?? account?.customer;
 
   return (
-    <div className="account-profile">
-      <h2>My profile</h2>
-      <br />
-      <Form method="PUT">
-        <legend>Personal information</legend>
-        <fieldset>
-          <label htmlFor="firstName">First name</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            autoComplete="given-name"
-            placeholder="First name"
-            aria-label="First name"
-            defaultValue={customer.firstName ?? ''}
-            minLength={2}
-          />
-          <label htmlFor="lastName">Last name</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            autoComplete="family-name"
-            placeholder="Last name"
-            aria-label="Last name"
-            defaultValue={customer.lastName ?? ''}
-            minLength={2}
-          />
-        </fieldset>
-        {action?.error ? (
-          <p>
-            <mark>
-              <small>{action.error}</small>
-            </mark>
-          </p>
-        ) : (
-          <br />
-        )}
-        <button type="submit" disabled={state !== 'idle'}>
-          {state !== 'idle' ? 'Updating' : 'Update'}
-        </button>
-      </Form>
+    <div className="jfw-account-profile">
+      <h2 className="font-heading text-lg md:text-xl uppercase tracking-[0.15em] text-jfw-white mb-6">
+        My Profile
+      </h2>
+
+      <div className="jfw-profile-card bg-jfw-dark border border-jfw-gray rounded-xl p-6 md:p-8">
+        <Form method="PUT" className="space-y-6">
+          <h3 className="font-heading text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">
+            Personal Information
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="firstName"
+                className="jfw-profile-label block font-heading text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2"
+              >
+                First Name
+              </label>
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                autoComplete="given-name"
+                placeholder="First name"
+                aria-label="First name"
+                defaultValue={customer.firstName ?? ''}
+                minLength={2}
+                className="jfw-profile-input w-full bg-jfw-black border border-jfw-gray rounded-lg px-4 py-3 font-body text-sm text-jfw-white placeholder-gray-600 focus:outline-none focus:border-jfw-blue/50 focus:ring-1 focus:ring-jfw-blue/20 transition-all duration-200"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="lastName"
+                className="jfw-profile-label block font-heading text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2"
+              >
+                Last Name
+              </label>
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                autoComplete="family-name"
+                placeholder="Last name"
+                aria-label="Last name"
+                defaultValue={customer.lastName ?? ''}
+                minLength={2}
+                className="jfw-profile-input w-full bg-jfw-black border border-jfw-gray rounded-lg px-4 py-3 font-body text-sm text-jfw-white placeholder-gray-600 focus:outline-none focus:border-jfw-blue/50 focus:ring-1 focus:ring-jfw-blue/20 transition-all duration-200"
+              />
+            </div>
+          </div>
+
+          {/* Error / Success State */}
+          {action?.error ? (
+            <p className="jfw-profile-error text-red-400 text-sm font-body" role="alert">
+              {action.error}
+            </p>
+          ) : action?.customer ? (
+            <p className="jfw-profile-success inline-flex items-center gap-2 text-green-400 text-sm font-body" role="status" aria-live="polite">
+              <Check size={16} />
+              Profile updated successfully.
+            </p>
+          ) : null}
+
+          <button
+            type="submit"
+            disabled={state !== 'idle'}
+            className="jfw-profile-save inline-flex items-center justify-center gap-2 bg-jfw-blue hover:bg-jfw-blue-dark text-jfw-black font-heading text-sm uppercase tracking-[0.2em] px-8 py-3 rounded-lg transition-all duration-300 hover:shadow-jfw-glow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {state !== 'idle' ? 'Updating...' : 'Save Changes'}
+          </button>
+        </Form>
+      </div>
     </div>
   );
 }

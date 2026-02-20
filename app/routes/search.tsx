@@ -12,9 +12,13 @@ import type {
   RegularSearchQuery,
   PredictiveSearchQuery,
 } from 'storefrontapi.generated';
+import {getSeoMeta} from '~/lib/seo';
 
 export const meta: Route.MetaFunction = () => {
-  return [{title: `Hydrogen | Search`}];
+  return getSeoMeta({
+    title: 'Journey Fitness Wear | Search',
+    description: 'Search for products, collections, and more at Journey Fitness Wear.',
+  });
 };
 
 export async function loader({request, context}: Route.LoaderArgs) {

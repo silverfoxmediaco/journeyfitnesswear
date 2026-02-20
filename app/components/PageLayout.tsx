@@ -47,7 +47,7 @@ export function PageLayout({
       )}
       {/* Spacer for fixed header */}
       <div style={{height: 'var(--header-height)'}} />
-      <main className="jfw-main min-h-screen">{children}</main>
+      <main id="main-content" className="jfw-main min-h-screen">{children}</main>
       <Footer
         footer={footer}
         header={header}

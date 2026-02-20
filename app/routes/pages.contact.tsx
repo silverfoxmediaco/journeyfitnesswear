@@ -3,16 +3,15 @@ import {motion} from 'framer-motion';
 import {Mail, Clock, MapPin, Instagram, Facebook, Twitter, Youtube, Send} from 'lucide-react';
 import {SOCIAL_LINKS} from '~/lib/constants';
 import {useState} from 'react';
+import {getSeoMeta} from '~/lib/seo';
 
 export const meta: Route.MetaFunction = () => {
-  return [
-    {title: 'Journey Fitness Wear | Contact Us'},
-    {
-      name: 'description',
-      content:
-        'Get in touch with Journey Fitness Wear. Questions about orders, sizing, or partnerships? We\'d love to hear from you.',
-    },
-  ];
+  return getSeoMeta({
+    title: 'Journey Fitness Wear | Contact Us',
+    description:
+      'Get in touch with Journey Fitness Wear. Questions about orders, sizing, or partnerships? We\'d love to hear from you.',
+    url: 'https://journeyfitnesswear.com/pages/contact',
+  });
 };
 
 export default function ContactPage() {
@@ -104,7 +103,7 @@ function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="jfw-contact-success p-8 md:p-12 bg-jfw-dark border border-jfw-gray rounded-xl text-center">
+      <div className="jfw-contact-success p-8 md:p-12 bg-jfw-dark border border-jfw-gray rounded-xl text-center" role="status" aria-live="polite">
         <div className="w-16 h-16 rounded-full bg-jfw-blue/10 flex items-center justify-center mx-auto mb-6">
           <Mail size={28} className="text-jfw-blue" />
         </div>

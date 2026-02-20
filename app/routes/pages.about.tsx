@@ -2,16 +2,15 @@ import type {Route} from './+types/pages.about';
 import {Link} from 'react-router';
 import {motion} from 'framer-motion';
 import {Zap, Palette, Users, Shield, ArrowRight} from 'lucide-react';
+import {getSeoMeta} from '~/lib/seo';
 
 export const meta: Route.MetaFunction = () => {
-  return [
-    {title: 'Journey Fitness Wear | Our Story'},
-    {
-      name: 'description',
-      content:
-        'Journey Fitness Wear was born from a belief that your gear should match your ambition. Learn about our mission, values, and the journey behind the brand.',
-    },
-  ];
+  return getSeoMeta({
+    title: 'Journey Fitness Wear | Our Story',
+    description:
+      'Journey Fitness Wear was born from a belief that your gear should match your ambition. Learn about our mission, values, and the journey behind the brand.',
+    url: 'https://journeyfitnesswear.com/pages/about',
+  });
 };
 
 export default function AboutPage() {
