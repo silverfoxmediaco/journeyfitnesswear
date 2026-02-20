@@ -1,4 +1,5 @@
 import {Link, useNavigate} from 'react-router';
+import {useState} from 'react';
 import {type MappedProductOptions} from '@shopify/hydrogen';
 import type {
   Maybe,
@@ -7,6 +8,7 @@ import type {
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
 import type {ProductFragment} from 'storefrontapi.generated';
+import {Minus, Plus} from 'lucide-react';
 
 export function ProductForm({
   productOptions,
@@ -17,6 +19,7 @@ export function ProductForm({
 }) {
   const navigate = useNavigate();
   const {open} = useAside();
+  const [quantity, setQuantity] = useState(1);
   return (
     <div className="jfw-product-form space-y-6">
       {productOptions.map((option) => {
@@ -95,6 +98,35 @@ export function ProductForm({
         );
       })}
 
+      {/* Quantity Selector */}
+      <div className="jfw-quantity-selector">
+        <h5 className="font-heading text-xs uppercase tracking-[0.2em] text-gray-400 mb-3">
+          Quantity
+        </h5>
+        <div className="inline-flex items-center border border-jfw-gray rounded-lg overflow-hidden">
+          <button
+            type="button"
+            aria-label="Decrease quantity"
+            disabled={quantity <= 1}
+            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+            className="jfw-qty-decrease w-10 h-10 flex items-center justify-center text-gray-400 hover:text-jfw-blue hover:bg-jfw-gray/50 transition-colors duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <Minus size={16} />
+          </button>
+          <span className="jfw-qty-display w-14 h-10 flex items-center justify-center font-body text-sm text-jfw-white bg-jfw-dark border-x border-jfw-gray">
+            {quantity}
+          </span>
+          <button
+            type="button"
+            aria-label="Increase quantity"
+            onClick={() => setQuantity((q) => q + 1)}
+            className="jfw-qty-increase w-10 h-10 flex items-center justify-center text-gray-400 hover:text-jfw-blue hover:bg-jfw-gray/50 transition-colors duration-200"
+          >
+            <Plus size={16} />
+          </button>
+        </div>
+      </div>
+
       {/* Add to Cart */}
       <div className="pt-2">
         <AddToCartButton
@@ -107,7 +139,7 @@ export function ProductForm({
               ? [
                   {
                     merchandiseId: selectedVariant.id,
-                    quantity: 1,
+                    quantity,
                     selectedVariant,
                   },
                 ]
