@@ -65,7 +65,7 @@ export function links() {
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap',
     },
-    {rel: 'icon', type: 'image/png', href: '/logos/jfw600logo.png'},
+    {rel: 'icon', type: 'image/png', href: '/logos/JOURNEYFITNESSWEAR300SOLID.png'},
   ];
 }
 
