@@ -1,10 +1,8 @@
 import {redirect, useLoaderData, useNavigate, useSearchParams} from 'react-router';
 import type {Route} from './+types/collections.$handle';
-import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
-import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {Analytics} from '@shopify/hydrogen';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductCard} from '~/components/product/ProductCard';
-import type {ProductItemFragment} from 'storefrontapi.generated';
 
 import {getSeoMeta} from '~/lib/seo';
 
@@ -34,9 +32,6 @@ const SORT_OPTIONS: Record<string, {sortKey: string; reverse: boolean}> = {
 async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
   const {handle} = params;
   const {storefront} = context;
-  const paginationVariables = getPaginationVariables(request, {
-    pageBy: 12,
-  });
 
   if (!handle) {
     throw redirect('/collections');
@@ -50,7 +45,6 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
     storefront.query(COLLECTION_QUERY, {
       variables: {
         handle,
-        ...paginationVariables,
         ...(sortOption
           ? {sortKey: sortOption.sortKey, reverse: sortOption.reverse}
           : {}),
@@ -134,19 +128,16 @@ export default function Collection() {
         </div>
 
         {/* Products Grid */}
-        <PaginatedResourceSection<ProductItemFragment>
-          connection={collection.products}
-          resourcesClassName="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-12"
-        >
-          {({node: product, index}) => (
+        <div className="jfw-products-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
+          {collection.products.nodes.map((product: any, index: number) => (
             <ProductCard
               key={product.id}
               product={product}
               loading={index < 8 ? 'eager' : undefined}
               collectionHandle={collection.handle}
             />
-          )}
-        </PaginatedResourceSection>
+          ))}
+        </div>
 
         <Analytics.CollectionView
           data={{
@@ -195,10 +186,6 @@ const COLLECTION_QUERY = `#graphql
     $handle: String!
     $country: CountryCode
     $language: LanguageCode
-    $first: Int
-    $last: Int
-    $startCursor: String
-    $endCursor: String
     $sortKey: ProductCollectionSortKeys
     $reverse: Boolean
   ) @inContext(country: $country, language: $language) {
@@ -208,21 +195,12 @@ const COLLECTION_QUERY = `#graphql
       title
       description
       products(
-        first: $first,
-        last: $last,
-        before: $startCursor,
-        after: $endCursor,
+        first: 250,
         sortKey: $sortKey,
         reverse: $reverse
       ) {
         nodes {
           ...ProductItem
-        }
-        pageInfo {
-          hasPreviousPage
-          hasNextPage
-          endCursor
-          startCursor
         }
       }
     }
