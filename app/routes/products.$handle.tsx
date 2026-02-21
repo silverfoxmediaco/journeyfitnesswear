@@ -114,26 +114,26 @@ export default function Product() {
     <div className="jfw-product-detail py-8 md:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}
-        <nav className="jfw-product-breadcrumb flex items-center gap-1.5 mb-6 md:mb-10" aria-label="Breadcrumb">
+        <nav className="jfw-product-breadcrumb flex items-center flex-wrap gap-x-1.5 gap-y-1 mb-6 md:mb-10 overflow-hidden" aria-label="Breadcrumb">
           <Link
             to="/"
-            className="jfw-breadcrumb-link font-heading text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-jfw-blue transition-colors duration-200"
+            className="jfw-breadcrumb-link font-heading text-[9px] sm:text-[10px] uppercase tracking-[0.1em] sm:tracking-[0.2em] text-gray-500 hover:text-jfw-blue transition-colors duration-200 flex-shrink-0"
           >
             Home
           </Link>
           {breadcrumbCollection && (
             <>
-              <ChevronRight size={12} className="text-gray-600" />
+              <ChevronRight size={10} className="text-gray-600 flex-shrink-0 sm:w-3 sm:h-3" />
               <Link
                 to={`/collections/${breadcrumbCollection.handle}`}
-                className="jfw-breadcrumb-link font-heading text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-jfw-blue transition-colors duration-200"
+                className="jfw-breadcrumb-link font-heading text-[9px] sm:text-[10px] uppercase tracking-[0.1em] sm:tracking-[0.2em] text-gray-500 hover:text-jfw-blue transition-colors duration-200 flex-shrink-0"
               >
                 {breadcrumbCollection.title}
               </Link>
             </>
           )}
-          <ChevronRight size={12} className="text-gray-600" />
-          <span className="jfw-breadcrumb-current font-heading text-[10px] uppercase tracking-[0.2em] text-gray-400 truncate max-w-[200px]">
+          <ChevronRight size={10} className="text-gray-600 flex-shrink-0 sm:w-3 sm:h-3" />
+          <span className="jfw-breadcrumb-current font-heading text-[9px] sm:text-[10px] uppercase tracking-[0.1em] sm:tracking-[0.2em] text-gray-400 truncate max-w-[160px] sm:max-w-[200px]">
             {title}
           </span>
         </nav>
