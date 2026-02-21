@@ -42,7 +42,7 @@ export function ProductImage({
           data={displayImage}
           key={displayImage.id}
           sizes="(min-width: 45em) 50vw, 100vw"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 
