@@ -56,8 +56,13 @@ export function ProductCard({
         </div>
       </div>
 
-      {/* Quick Action Overlay */}
-      <div className="jfw-product-card-overlay absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-jfw-black/90 to-transparent pt-12 pointer-events-none">
+      {/* Quick Action — always visible on mobile, hover overlay on desktop */}
+      <div className="jfw-product-card-cta-mobile sm:hidden p-4 pt-0">
+        <span className="jfw-product-card-action block w-full text-center bg-jfw-blue text-jfw-black font-heading text-xs uppercase tracking-[0.15em] py-2.5 rounded-lg">
+          View Product
+        </span>
+      </div>
+      <div className="jfw-product-card-overlay hidden sm:block absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-jfw-black/90 to-transparent pt-12 pointer-events-none">
         <span className="jfw-product-card-action block w-full text-center bg-jfw-blue text-jfw-black font-heading text-xs uppercase tracking-[0.15em] py-2.5 rounded-lg">
           View Product
         </span>
