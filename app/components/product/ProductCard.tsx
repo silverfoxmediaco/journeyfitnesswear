@@ -10,14 +10,19 @@ import type {
 export function ProductCard({
   product,
   loading,
+  collectionHandle,
 }: {
   product:
     | CollectionItemFragment
     | ProductItemFragment
     | RecommendedProductFragment;
   loading?: 'eager' | 'lazy';
+  collectionHandle?: string;
 }) {
   const variantUrl = useVariantUrl(product.handle);
+  const productUrl = collectionHandle
+    ? variantUrl + (variantUrl.includes('?') ? '&' : '?') + `ref=${collectionHandle}`
+    : variantUrl;
   const image = product.featuredImage;
 
   return (
@@ -25,7 +30,7 @@ export function ProductCard({
       className="jfw-product-card group block relative overflow-hidden rounded-lg bg-jfw-dark border border-transparent hover:border-jfw-blue/20 transition-all duration-300 hover:shadow-jfw-glow"
       key={product.id}
       prefetch="intent"
-      to={variantUrl}
+      to={productUrl}
     >
       {/* Product Image */}
       <div className="jfw-product-card-image aspect-square overflow-hidden bg-jfw-gray">

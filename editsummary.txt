@@ -740,6 +740,21 @@ BATCH 7: ACCESSIBILITY
     - Order list: aria-live="polite" on orders container (account.orders._index.tsx)
     - Order search form: aria-label="Search orders"
 
+Post-Launch — UX Improvements
+Date: 2026-02-21
+========================================
+
+66. PRODUCT PAGE BREADCRUMB NAVIGATION
+    - Added breadcrumb nav to products.$handle.tsx: Home > Collection > Product
+    - Added `collections(first: 5)` to PRODUCT_FRAGMENT GraphQL query
+    - Breadcrumb uses `?ref=` URL param to identify which collection the shopper came from
+    - Falls back to the product's first collection if no ref param
+    - Styled with jfw-product-breadcrumb, jfw-breadcrumb-link, jfw-breadcrumb-current classes
+    - Updated ProductCard.tsx to accept optional `collectionHandle` prop
+    - ProductCard appends `?ref={collectionHandle}` to product URLs
+    - Updated collections.$handle.tsx to pass `collection.handle` to ProductCard
+    - Uses ChevronRight lucide icon as separator
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:

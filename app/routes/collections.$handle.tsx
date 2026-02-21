@@ -143,6 +143,7 @@ export default function Collection() {
               key={product.id}
               product={product}
               loading={index < 8 ? 'eager' : undefined}
+              collectionHandle={collection.handle}
             />
           )}
         </PaginatedResourceSection>

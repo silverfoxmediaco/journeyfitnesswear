@@ -1,4 +1,4 @@
-import {redirect, useLoaderData, Await} from 'react-router';
+import {redirect, useLoaderData, Await, Link, useSearchParams} from 'react-router';
 import {Suspense} from 'react';
 import type {Route} from './+types/products.$handle';
 import {
@@ -15,6 +15,7 @@ import {ProductForm} from '~/components/ProductForm';
 import {RecommendedProducts} from '~/components/product/RecommendedProducts';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {getSeoMeta, getProductJsonLd} from '~/lib/seo';
+import {ChevronRight} from 'lucide-react';
 
 export const meta: Route.MetaFunction = ({data}) => {
   const product = data?.product;
@@ -101,9 +102,42 @@ export default function Product() {
 
   const {title, descriptionHtml, vendor} = product;
 
+  const [searchParams] = useSearchParams();
+  const refCollection = searchParams.get('ref');
+
+  const collections = product.collections?.nodes || [];
+  const breadcrumbCollection = refCollection
+    ? collections.find((c: any) => c.handle === refCollection) || collections[0]
+    : collections[0];
+
   return (
     <div className="jfw-product-detail py-8 md:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <nav className="jfw-product-breadcrumb flex items-center gap-1.5 mb-6 md:mb-10" aria-label="Breadcrumb">
+          <Link
+            to="/"
+            className="jfw-breadcrumb-link font-heading text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-jfw-blue transition-colors duration-200"
+          >
+            Home
+          </Link>
+          {breadcrumbCollection && (
+            <>
+              <ChevronRight size={12} className="text-gray-600" />
+              <Link
+                to={`/collections/${breadcrumbCollection.handle}`}
+                className="jfw-breadcrumb-link font-heading text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-jfw-blue transition-colors duration-200"
+              >
+                {breadcrumbCollection.title}
+              </Link>
+            </>
+          )}
+          <ChevronRight size={12} className="text-gray-600" />
+          <span className="jfw-breadcrumb-current font-heading text-[10px] uppercase tracking-[0.2em] text-gray-400 truncate max-w-[200px]">
+            {title}
+          </span>
+        </nav>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
           {/* Product Image Gallery */}
           <ProductImage
@@ -267,6 +301,12 @@ const PRODUCT_FRAGMENT = `#graphql
     }
     adjacentVariants (selectedOptions: $selectedOptions) {
       ...ProductVariant
+    }
+    collections(first: 5) {
+      nodes {
+        title
+        handle
+      }
     }
     seo {
       description
