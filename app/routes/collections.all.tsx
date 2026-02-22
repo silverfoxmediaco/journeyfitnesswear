@@ -1,9 +1,6 @@
 import type {Route} from './+types/collections.all';
 import {useLoaderData} from 'react-router';
-import {getPaginationVariables} from '@shopify/hydrogen';
-import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductCard} from '~/components/product/ProductCard';
-import type {CollectionItemFragment} from 'storefrontapi.generated';
 
 export const meta: Route.MetaFunction = () => {
   return [
@@ -22,16 +19,11 @@ export async function loader(args: Route.LoaderArgs) {
   return {...deferredData, ...criticalData};
 }
 
-async function loadCriticalData({context, request}: Route.LoaderArgs) {
+async function loadCriticalData({context}: Route.LoaderArgs) {
   const {storefront} = context;
-  const paginationVariables = getPaginationVariables(request, {
-    pageBy: 12,
-  });
 
   const [{products}] = await Promise.all([
-    storefront.query(CATALOG_QUERY, {
-      variables: {...paginationVariables},
-    }),
+    storefront.query(CATALOG_QUERY),
   ]);
   return {products};
 }
@@ -55,18 +47,16 @@ export default function Collection() {
         </div>
 
         {/* Products Grid */}
-        <PaginatedResourceSection<CollectionItemFragment>
-          connection={products}
-          resourcesClassName="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-12"
-        >
-          {({node: product, index}) => (
+        <div className="jfw-all-products-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
+          {products.nodes.map((product: any, index: number) => (
             <ProductCard
               key={product.id}
               product={product}
               loading={index < 8 ? 'eager' : undefined}
+              collectionHandle="all"
             />
-          )}
-        </PaginatedResourceSection>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -103,20 +93,10 @@ const CATALOG_QUERY = `#graphql
   query Catalog(
     $country: CountryCode
     $language: LanguageCode
-    $first: Int
-    $last: Int
-    $startCursor: String
-    $endCursor: String
   ) @inContext(country: $country, language: $language) {
-    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
+    products(first: 250) {
       nodes {
         ...CollectionItem
-      }
-      pageInfo {
-        hasPreviousPage
-        hasNextPage
-        startCursor
-        endCursor
       }
     }
   }
