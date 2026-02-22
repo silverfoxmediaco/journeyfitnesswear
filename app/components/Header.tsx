@@ -96,7 +96,7 @@ export function HeaderMenu({
           prefetch="intent"
           to="/"
           className={({isActive}) =>
-            `jfw-mobile-nav-link block px-4 py-3 font-heading text-sm uppercase tracking-widest transition-all duration-200 border-l-2 ${
+            `jfw-mobile-nav-link block px-4 py-3 font-heading text-sm uppercase tracking-widest transition-all duration-200 no-underline border-l-2 ${
               isActive
                 ? 'text-jfw-blue border-jfw-blue bg-jfw-blue/5'
                 : 'text-jfw-white border-transparent hover:text-jfw-blue hover:border-jfw-blue/50'
@@ -121,7 +121,7 @@ export function HeaderMenu({
               prefetch="intent"
               to={url}
               className={({isActive}) =>
-                `jfw-mobile-nav-link block px-4 py-3 font-heading text-sm uppercase tracking-widest transition-all duration-200 border-l-2 ${
+                `jfw-mobile-nav-link block px-4 py-3 font-heading text-sm uppercase tracking-widest transition-all duration-200 no-underline border-l-2 ${
                   isActive
                     ? 'text-jfw-blue border-jfw-blue bg-jfw-blue/5'
                     : 'text-jfw-white border-transparent hover:text-jfw-blue hover:border-jfw-blue/50'
@@ -156,23 +156,14 @@ export function HeaderMenu({
             prefetch="intent"
             to={url}
             className={({isActive}) =>
-              `jfw-nav-link font-heading text-xs uppercase tracking-[0.2em] transition-all duration-200 relative py-1 ${
+              `jfw-nav-link font-heading text-xs uppercase tracking-[0.2em] transition-all duration-200 no-underline py-1 ${
                 isActive
                   ? 'text-jfw-blue'
                   : 'text-jfw-black hover:text-jfw-blue'
               }`
             }
           >
-            {({isActive}) => (
-              <>
-                {item.title}
-                <span
-                  className={`absolute -bottom-1 left-0 h-[2px] bg-jfw-blue transition-all duration-300 ${
-                    isActive ? 'w-full' : 'w-0'
-                  }`}
-                />
-              </>
-            )}
+            {item.title}
           </NavLink>
         );
       })}
