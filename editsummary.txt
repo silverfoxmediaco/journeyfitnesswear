@@ -769,6 +769,11 @@ Date: 2026-02-27
     - Both scripts use Hydrogen `nonce` for Content-Security-Policy compatibility
     - Placed after <Links /> and before </head> for early loading
 
+68. 301 REDIRECT: /about-us → /pages/about (app/routes/about-us.tsx)
+    - New route file handles old WordPress URL /about-us/
+    - Returns 301 permanent redirect to /pages/about
+    - Preserves SEO value from old WordPress site Google listings
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:
