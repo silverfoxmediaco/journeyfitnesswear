@@ -756,6 +756,20 @@ Date: 2026-02-21
     - Uses ChevronRight lucide icon as separator
 
 ========================================
+
+Google Ads Tracking
+Date: 2026-02-27
+========================================
+
+67. GOOGLE ADS GTAG.JS (app/root.tsx)
+    - Added Google Ads gtag.js script to <head> in Layout component
+    - Tag ID: AW-17978852504
+    - External async script loads googletagmanager.com/gtag/js
+    - Inline script initializes dataLayer and configures tag
+    - Both scripts use Hydrogen `nonce` for Content-Security-Policy compatibility
+    - Placed after <Links /> and before </head> for early loading
+
+========================================
 BUILD STATUS: PASSING
 NOTES:
 - Live at journeyfitnesswear.com via Shopify Oxygen
