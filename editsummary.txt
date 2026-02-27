@@ -774,6 +774,13 @@ Date: 2026-02-27
     - Returns 301 permanent redirect to /pages/about
     - Preserves SEO value from old WordPress site Google listings
 
+69. PRINTIFY TABLE TEXT COLOR FIX (app/styles/app.css)
+    - Override inline #525252 grey text from Printify product descriptions to white
+    - Targets td, th, span, p elements with inline color:#525252 styles
+    - Also overrides all table cells inside .prose to white text
+    - Table borders changed from Printify default to #2A2A2A for dark theme
+    - Uses !important to override inline styles from API content
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:

@@ -39,6 +39,26 @@
     border-radius: 4px;
   }
 
+  /* Override Printify inline grey (#525252) text in product descriptions */
+  td[style*="color:#525252"],
+  td[style*="color: #525252"],
+  span[style*="color:#525252"],
+  span[style*="color: #525252"],
+  p[style*="color:#525252"],
+  p[style*="color: #525252"],
+  th[style*="color:#525252"],
+  th[style*="color: #525252"] {
+    color: #FFFFFF !important;
+  }
+
+  /* Catch any other dark inline text colors from Printify on tables */
+  .prose td,
+  .prose th,
+  .prose tr {
+    color: #FFFFFF !important;
+    border-color: #2A2A2A !important;
+  }
+
   /* Focus-visible ring for all interactive elements */
   a:focus-visible,
   button:focus-visible,
