@@ -227,6 +227,12 @@ export function Footer({
                   >
                     Shipping
                   </NavLink>
+                  <NavLink
+                    to="/policies/refund-policy"
+                    className="jfw-footer-policy-link font-body text-xs text-gray-500 hover:text-jfw-blue transition-colors duration-200"
+                  >
+                    Returns
+                  </NavLink>
                 </div>
               </div>
             </div>

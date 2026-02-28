@@ -781,6 +781,11 @@ Date: 2026-02-27
     - Table borders changed from Printify default to #2A2A2A for dark theme
     - Uses !important to override inline styles from API content
 
+70. FOOTER — RETURNS POLICY LINK (app/components/Footer.tsx)
+    - Added "Returns" link to bottom bar policy links
+    - Links to /policies/refund-policy
+    - Matches existing Privacy, Terms, Shipping link styling
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:
