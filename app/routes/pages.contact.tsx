@@ -235,10 +235,10 @@ function ContactInfo() {
               Email Us
             </h3>
             <a
-              href="mailto:support@journeyfitnesswear.com"
+              href="mailto:customerservice@journeyfitnesswear.com"
               className="font-body text-sm text-gray-400 hover:text-jfw-blue transition-colors duration-200"
             >
-              support@journeyfitnesswear.com
+              customerservice@journeyfitnesswear.com
             </a>
           </div>
         </div>
@@ -275,7 +275,7 @@ function ContactInfo() {
               United States
             </p>
             <p className="font-body text-xs text-gray-500 mt-1">
-              Shipping worldwide via Printful
+              Shipping worldwide via Printify
             </p>
           </div>
         </div>

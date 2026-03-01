@@ -34,6 +34,12 @@ export function Footer({
                     goal. Elevate your fitness journey with gear that matches
                     your ambition.
                   </p>
+                  <a
+                    href="mailto:information@journeyfitnesswear.com"
+                    className="jfw-footer-email font-body text-sm text-gray-400 hover:text-jfw-blue transition-colors duration-200 inline-block mb-6"
+                  >
+                    information@journeyfitnesswear.com
+                  </a>
                   {/* Social Links */}
                   <div className="flex items-center gap-4">
                     <a

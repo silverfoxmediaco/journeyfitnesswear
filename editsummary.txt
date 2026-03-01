@@ -786,6 +786,16 @@ Date: 2026-02-27
     - Links to /policies/refund-policy
     - Matches existing Privacy, Terms, Shipping link styling
 
+71. CONTACT PAGE UPDATES (app/routes/pages.contact.tsx)
+    - Changed email from support@journeyfitnesswear.com to customerservice@journeyfitnesswear.com
+    - Updated mailto link to match
+    - Fixed "Shipping worldwide via Printful" → "Shipping worldwide via Printify"
+
+72. FOOTER — INFO EMAIL (app/components/Footer.tsx)
+    - Added information@journeyfitnesswear.com mailto link to Brand column
+    - Placed below tagline, above social icons
+    - Unique className: jfw-footer-email
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:
