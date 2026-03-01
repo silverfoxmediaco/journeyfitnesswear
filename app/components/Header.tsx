@@ -113,6 +113,7 @@ export function HeaderMenu({
             item.url.includes(primaryDomainUrl)
               ? new URL(item.url).pathname
               : item.url;
+          if (url === '/') return null;
           return (
             <NavLink
               end
