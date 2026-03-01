@@ -796,6 +796,10 @@ Date: 2026-02-27
     - Placed below tagline, above social icons
     - Unique className: jfw-footer-email
 
+73. MOBILE MENU — DUPLICATE HOME FIX
+    - Removed duplicate "Home" link from Shopify Admin main menu
+    - Hardcoded Home link in Header.tsx remains as the single source
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:
