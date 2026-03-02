@@ -51,7 +51,7 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
 
   return (
     <div className={`jfw-cart-main cart-main ${withDiscount ? 'jfw-cart-with-discount with-discount' : ''}`}>
-      <CartEmpty hidden={linesCount} layout={layout} />
+      {!linesCount && <CartEmpty layout={layout} />}
 
       <div className="jfw-cart-details">
         <p id="cart-lines" className="sr-only">
@@ -83,16 +83,13 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
 }
 
 function CartEmpty({
-  hidden = false,
   layout,
 }: {
-  hidden: boolean;
   layout?: CartMainProps['layout'];
 }) {
   const {close} = useAside();
   return (
     <div
-      hidden={hidden}
       className="jfw-cart-empty flex flex-col items-center justify-center py-16 text-center"
     >
       <div className="w-20 h-20 rounded-full bg-jfw-gray flex items-center justify-center mb-6">
