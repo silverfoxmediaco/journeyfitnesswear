@@ -19,6 +19,34 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    // Google Fonts — styleSrc/connectSrc have defaults so values get merged
+    styleSrc: ['https://fonts.googleapis.com'],
+    connectSrc: [
+      'https://fonts.googleapis.com',
+      'https://fonts.gstatic.com',
+      'https://www.googletagmanager.com',
+      'https://www.google.com',
+      'https://www.googleadservices.com',
+      'https://www.google-analytics.com',
+    ],
+    // These directives have NO defaults — must include 'self' + cdn.shopify.com
+    fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+    imgSrc: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://www.googletagmanager.com',
+      'https://www.google.com',
+      'https://www.googleadservices.com',
+      'https://googleads.g.doubleclick.net',
+      'data:',
+    ],
+    frameSrc: [
+      "'self'",
+      'https://www.googletagmanager.com',
+      'https://td.doubleclick.net',
+    ],
+    // NOTE: Do NOT set scriptSrc — it would remove the nonce from script-src
+    // and break all Hydrogen scripts. The nonce in default-src handles scripts.
   });
 
   const body = await renderToReadableStream(
