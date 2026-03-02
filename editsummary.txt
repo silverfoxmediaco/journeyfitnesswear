@@ -800,6 +800,17 @@ Date: 2026-02-27
     - Removed duplicate "Home" link from Shopify Admin main menu
     - Hardcoded Home link in Header.tsx remains as the single source
 
+74. ADD TO CART FIX (app/components/AddToCartButton.tsx)
+    - CRITICAL BUG FIX: Cart was showing empty after clicking "Add to Cart"
+    - Root cause 1: onClick (which opens cart aside) fired BEFORE the CartForm
+      submission completed — race condition meant cart aside opened with stale/empty data
+    - Root cause 2: `disabled ?? fetcher.state !== 'idle'` used nullish coalescing (??)
+      instead of logical OR (||), so button never disabled during submission
+    - Fix: Extracted AddToCartInner component to use useEffect hook that watches
+      fetcher.state and fetcher.data — cart aside now opens AFTER successful add
+    - Fix: Changed disabled logic to `disabled || fetcher.state !== 'idle'`
+    - Unique className: jfw-add-to-cart (retained)
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:
