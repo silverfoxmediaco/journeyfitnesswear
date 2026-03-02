@@ -811,21 +811,6 @@ Date: 2026-02-27
     - Fix: Changed disabled logic to `disabled || fetcher.state !== 'idle'`
     - Unique className: jfw-add-to-cart (retained)
 
-75. CSP FIX — GOOGLE FONTS + GOOGLE ADS (app/entry.server.tsx)
-    - CRITICAL FIX: Content Security Policy was blocking Google Fonts and Google Ads
-    - Added Google Fonts domains to CSP:
-      - styleSrc: fonts.googleapis.com
-      - fontSrc: fonts.gstatic.com
-      - connectSrc: fonts.googleapis.com, fonts.gstatic.com
-    - Added Google Ads domains to CSP:
-      - scriptSrc: www.googletagmanager.com, www.googleadservices.com
-      - connectSrc: www.googletagmanager.com, www.google.com,
-        www.googleadservices.com, www.google-analytics.com
-      - imgSrc: www.googletagmanager.com, www.google.com,
-        www.googleadservices.com, googleads.g.doubleclick.net, data:
-      - frameSrc: www.googletagmanager.com, td.doubleclick.net
-    - Uses Hydrogen addCspDirective merge (custom values added to defaults)
-
 ========================================
 BUILD STATUS: PASSING
 NOTES:

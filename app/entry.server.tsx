@@ -19,33 +19,6 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
-    // Google Fonts
-    styleSrc: ['https://fonts.googleapis.com'],
-    fontSrc: ['https://fonts.gstatic.com'],
-    // Google Ads (gtag.js) + Google Fonts
-    connectSrc: [
-      'https://fonts.googleapis.com',
-      'https://fonts.gstatic.com',
-      'https://www.googletagmanager.com',
-      'https://www.google.com',
-      'https://www.googleadservices.com',
-      'https://www.google-analytics.com',
-    ],
-    scriptSrc: [
-      'https://www.googletagmanager.com',
-      'https://www.googleadservices.com',
-    ],
-    imgSrc: [
-      'https://www.googletagmanager.com',
-      'https://www.google.com',
-      'https://www.googleadservices.com',
-      'https://googleads.g.doubleclick.net',
-      'data:',
-    ],
-    frameSrc: [
-      'https://www.googletagmanager.com',
-      'https://td.doubleclick.net',
-    ],
   });
 
   const body = await renderToReadableStream(
