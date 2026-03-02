@@ -164,23 +164,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
         <Links />
-        {/* Google Ads (gtag.js) */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17978852504"
-          nonce={nonce}
-        />
-        <script
-          nonce={nonce}
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'AW-17978852504');
-            `,
-          }}
-        />
       </head>
       <body className="bg-jfw-black text-jfw-white font-body antialiased">
         <a
@@ -198,6 +181,23 @@ export function Layout({children}: {children?: React.ReactNode}) {
         />
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        {/* Google Ads (gtag.js) — placed after Scripts to avoid hydration mismatch */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17978852504"
+          nonce={nonce}
+        />
+        <script
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17978852504');
+            `,
+          }}
+        />
       </body>
     </html>
   );
