@@ -74,6 +74,18 @@ const AsideContext = createContext<AsideContextValue | null>(null);
 Aside.Provider = function AsideProvider({children}: {children: ReactNode}) {
   const [type, setType] = useState<AsideType>('closed');
 
+  // Close aside when returning from external page (e.g. Shopify checkout)
+  // via browser back button — bfcache restores stale React state
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        setType('closed');
+      }
+    };
+    window.addEventListener('pageshow', handlePageShow);
+    return () => window.removeEventListener('pageshow', handlePageShow);
+  }, []);
+
   return (
     <AsideContext.Provider
       value={{
