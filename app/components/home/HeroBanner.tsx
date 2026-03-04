@@ -18,9 +18,9 @@ const HERO_SLIDES = [
   {
     src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_eleme_1027_0.mp4`,
     poster: '/images/woman-powerlifting.webp',
-    heading: 'Embrace the',
-    headingAccent: 'Process',
-    subtext: 'Made in America graphic tee — bold statement, premium comfort.',
+    heading: 'Made in',
+    headingAccent: 'America',
+    subtext: 'Bold graphics, premium comfort — proudly made in the USA.',
     cta: 'Shop Now',
     link: '/products/made-in-america-logo-on-front?ref=mens',
   },
@@ -116,7 +116,7 @@ export function HeroBanner() {
             {/* Accent line */}
             <div className="jfw-hero-video-accent w-16 h-[2px] bg-jfw-blue mb-8" />
 
-            <h1 className="jfw-hero-video-heading font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl uppercase tracking-[0.15em] text-white leading-tight mb-6">
+            <h1 className="jfw-hero-video-heading font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[60px] uppercase tracking-[0.15em] text-white leading-tight mb-6">
               {slide.heading}{' '}
               <span className="text-jfw-blue">{slide.headingAccent}</span>
             </h1>
