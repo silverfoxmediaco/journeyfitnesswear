@@ -3,10 +3,12 @@ import {Link} from 'react-router';
 import {motion, AnimatePresence} from 'framer-motion';
 import {ChevronDown, Pause, Play} from 'lucide-react';
 
+const S3_BASE = 'https://journeyfitnesswear.s3.us-east-2.amazonaws.com';
+
 const HERO_SLIDES = [
-  {src: '/videos/hero.mp4', poster: '/images/woman-powerlifting.webp'},
-  {src: '/videos/hero2.mp4', poster: '/images/woman-powerlifting.webp'},
-  {src: '/videos/hero3.mp4', poster: '/images/woman-powerlifting.webp'},
+  {src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_all_e_574_0.mp4`, poster: '/images/woman-powerlifting.webp'},
+  {src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_all_e_682_0.mp4`, poster: '/images/woman-powerlifting.webp'},
+  {src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_all_e_738_0.mp4`, poster: '/images/woman-powerlifting.webp'},
 ];
 
 const SLIDE_DURATION = 8000; // ms per slide
