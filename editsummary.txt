@@ -904,6 +904,12 @@ ASSETS NEEDED (placeholders in use):
     - public/images/activity-yoga.webp
     - public/images/activity-streetwear.webp
 
+85. HERO VIDEO — MOBILE ASPECT RATIO FIX (app/components/home/HeroBanner.tsx)
+    - Changed video class from object-contain to object-cover md:object-contain
+    - Mobile: video crops to fill full viewport height (no black bars)
+    - Desktop (md+): video contained within viewport (landscape ratio preserved)
+    - Unique className unchanged: jfw-hero-video-bg
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:

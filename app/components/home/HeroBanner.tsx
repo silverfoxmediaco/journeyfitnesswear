@@ -85,7 +85,7 @@ export function HeroBanner() {
           ref={(el) => {
             videoRefs.current[index] = el;
           }}
-          className={`jfw-hero-video-bg absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
+          className={`jfw-hero-video-bg absolute inset-0 w-full h-full object-cover md:object-contain transition-opacity duration-1000 ${
             index === activeIndex ? 'opacity-100' : 'opacity-0'
           }`}
           autoPlay={index === 0}
