@@ -7,15 +7,6 @@ const S3_BASE = 'https://journeyfitnesswear.s3.us-east-2.amazonaws.com';
 
 const HERO_SLIDES = [
   {
-    src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_eleme_1027_0.mp4`,
-    poster: '/images/woman-powerlifting.webp',
-    heading: 'Train in',
-    headingAccent: 'Style',
-    subtext: 'Recycled padded bikini sports bra — built for performance, designed for you.',
-    cta: 'Shop Now',
-    link: '/products/journey-fitness-wear-womens-recycled-padded-bikini-sports-bra-red?ref=womens',
-  },
-  {
     src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_eleme_1148_0.mp4`,
     poster: '/images/woman-powerlifting.webp',
     heading: 'Embrace the',
@@ -23,6 +14,15 @@ const HERO_SLIDES = [
     subtext: 'Made in America graphic tee — bold statement, premium comfort.',
     cta: 'Shop Now',
     link: '/products/made-in-america-logo-on-front?ref=mens',
+  },
+  {
+    src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_eleme_1027_0.mp4`,
+    poster: '/images/woman-powerlifting.webp',
+    heading: 'Train in',
+    headingAccent: 'Style',
+    subtext: 'Recycled padded bikini sports bra — built for performance, designed for you.',
+    cta: 'Shop Now',
+    link: '/products/journey-fitness-wear-womens-recycled-padded-bikini-sports-bra-red?ref=womens',
   },
 ];
 
@@ -77,7 +77,7 @@ export function HeroBanner() {
   const slide = HERO_SLIDES[activeIndex];
 
   return (
-    <section className="jfw-hero-video relative w-full h-screen flex items-center justify-center overflow-hidden -mt-[var(--header-height)]">
+    <section className="jfw-hero-video relative w-full h-screen flex items-center overflow-hidden -mt-[var(--header-height)] bg-black">
       {/* Video Slides */}
       {HERO_SLIDES.map((s, index) => (
         <video
@@ -85,7 +85,7 @@ export function HeroBanner() {
           ref={(el) => {
             videoRefs.current[index] = el;
           }}
-          className={`jfw-hero-video-bg absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          className={`jfw-hero-video-bg absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
             index === activeIndex ? 'opacity-100' : 'opacity-0'
           }`}
           autoPlay={index === 0}
@@ -99,28 +99,29 @@ export function HeroBanner() {
         </video>
       ))}
 
-      {/* Dark overlay for text readability */}
-      <div className="jfw-hero-video-overlay absolute inset-0 bg-black/50 z-10" />
+      {/* Dark overlay — gradient from left for text readability while showing model on right */}
+      <div className="jfw-hero-video-overlay absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent z-10" />
 
-      {/* Slide Content */}
-      <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 text-center">
+      {/* Slide Content — left aligned */}
+      <div className="relative z-20 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
+            className="max-w-lg"
             initial={{opacity: 0, y: 20}}
             animate={{opacity: 1, y: 0}}
             exit={{opacity: 0, y: -20}}
             transition={{duration: 0.5, ease: 'easeOut'}}
           >
             {/* Accent line */}
-            <div className="jfw-hero-video-accent w-16 h-[2px] bg-jfw-blue mx-auto mb-8" />
+            <div className="jfw-hero-video-accent w-16 h-[2px] bg-jfw-blue mb-8" />
 
             <h1 className="jfw-hero-video-heading font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl uppercase tracking-[0.15em] text-white leading-tight mb-6">
               {slide.heading}{' '}
               <span className="text-jfw-blue">{slide.headingAccent}</span>
             </h1>
 
-            <p className="jfw-hero-video-subtext font-body text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="jfw-hero-video-subtext font-body text-base sm:text-lg md:text-xl text-gray-300 mb-10 leading-relaxed">
               {slide.subtext}
             </p>
 
