@@ -40,6 +40,10 @@ export default async function handleRequest(
       'https://googleads.g.doubleclick.net',
       'data:',
     ],
+    mediaSrc: [
+      "'self'",
+      'https://journeyfitnesswear.s3.us-east-2.amazonaws.com',
+    ],
     frameSrc: [
       "'self'",
       'https://www.googletagmanager.com',
