@@ -6,9 +6,24 @@ import {ChevronDown, Pause, Play} from 'lucide-react';
 const S3_BASE = 'https://journeyfitnesswear.s3.us-east-2.amazonaws.com';
 
 const HERO_SLIDES = [
-  {src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_all_e_574_0.mp4`, poster: '/images/woman-powerlifting.webp'},
-  {src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_all_e_682_0.mp4`, poster: '/images/woman-powerlifting.webp'},
-  {src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_all_e_738_0.mp4`, poster: '/images/woman-powerlifting.webp'},
+  {
+    src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_eleme_1027_0.mp4`,
+    poster: '/images/woman-powerlifting.webp',
+    heading: 'Train in',
+    headingAccent: 'Style',
+    subtext: 'Recycled padded bikini sports bra — built for performance, designed for you.',
+    cta: 'Shop Now',
+    link: '/products/journey-fitness-wear-womens-recycled-padded-bikini-sports-bra-red?ref=womens',
+  },
+  {
+    src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_eleme_1148_0.mp4`,
+    poster: '/images/woman-powerlifting.webp',
+    heading: 'Embrace the',
+    headingAccent: 'Process',
+    subtext: 'Made in America graphic tee — bold statement, premium comfort.',
+    cta: 'Shop Now',
+    link: '/products/made-in-america-logo-on-front?ref=mens',
+  },
 ];
 
 const SLIDE_DURATION = 8000; // ms per slide
@@ -22,7 +37,6 @@ export function HeroBanner() {
   const goToSlide = useCallback(
     (index: number) => {
       setActiveIndex(index);
-      // Play the new active video, pause others
       videoRefs.current.forEach((video, i) => {
         if (!video) return;
         if (i === index) {
@@ -60,12 +74,14 @@ export function HeroBanner() {
     });
   };
 
+  const slide = HERO_SLIDES[activeIndex];
+
   return (
     <section className="jfw-hero-video relative w-full h-screen flex items-center justify-center overflow-hidden -mt-[var(--header-height)]">
       {/* Video Slides */}
-      {HERO_SLIDES.map((slide, index) => (
+      {HERO_SLIDES.map((s, index) => (
         <video
-          key={slide.src}
+          key={s.src}
           ref={(el) => {
             videoRefs.current[index] = el;
           }}
@@ -77,53 +93,46 @@ export function HeroBanner() {
           loop
           playsInline
           preload={index === 0 ? 'metadata' : 'none'}
-          poster={slide.poster}
+          poster={s.poster}
         >
-          <source src={slide.src} type="video/mp4" />
+          <source src={s.src} type="video/mp4" />
         </video>
       ))}
 
       {/* Dark overlay for text readability */}
       <div className="jfw-hero-video-overlay absolute inset-0 bg-black/50 z-10" />
 
-      {/* Content */}
+      {/* Slide Content */}
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 text-center">
-        <motion.div
-          initial={{opacity: 0, y: 30}}
-          animate={{opacity: 1, y: 0}}
-          transition={{duration: 0.8, ease: 'easeOut'}}
-        >
-          {/* Accent line */}
-          <div className="jfw-hero-video-accent w-16 h-[2px] bg-jfw-blue mx-auto mb-8" />
-
-          <h1 className="jfw-hero-video-heading font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl uppercase tracking-[0.15em] text-white leading-tight mb-6">
-            What&apos;s Your{' '}
-            <span className="text-jfw-blue">Journey</span>?
-          </h1>
-        </motion.div>
-
-        <motion.p
-          className="jfw-hero-video-subtext font-body text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed"
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{duration: 0.8, delay: 0.2, ease: 'easeOut'}}
-        >
-          Performance wear built for every rep, every mile, every goal.
-        </motion.p>
-
-        <motion.div
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{duration: 0.8, delay: 0.4, ease: 'easeOut'}}
-        >
-          <Link
-            to="/collections"
-            prefetch="intent"
-            className="jfw-hero-video-cta inline-block bg-jfw-blue hover:bg-jfw-blue-dark text-jfw-black font-heading text-sm sm:text-base uppercase tracking-[0.2em] px-10 py-4 rounded-lg transition-all duration-300 hover:shadow-jfw-glow-lg hover:scale-105"
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            initial={{opacity: 0, y: 20}}
+            animate={{opacity: 1, y: 0}}
+            exit={{opacity: 0, y: -20}}
+            transition={{duration: 0.5, ease: 'easeOut'}}
           >
-            Shop Now
-          </Link>
-        </motion.div>
+            {/* Accent line */}
+            <div className="jfw-hero-video-accent w-16 h-[2px] bg-jfw-blue mx-auto mb-8" />
+
+            <h1 className="jfw-hero-video-heading font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl uppercase tracking-[0.15em] text-white leading-tight mb-6">
+              {slide.heading}{' '}
+              <span className="text-jfw-blue">{slide.headingAccent}</span>
+            </h1>
+
+            <p className="jfw-hero-video-subtext font-body text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+              {slide.subtext}
+            </p>
+
+            <Link
+              to={slide.link}
+              prefetch="intent"
+              className="jfw-hero-video-cta inline-block bg-jfw-blue hover:bg-jfw-blue-dark text-jfw-black font-heading text-sm sm:text-base uppercase tracking-[0.2em] px-10 py-4 rounded-lg transition-all duration-300 hover:shadow-jfw-glow-lg hover:scale-105"
+            >
+              {slide.cta}
+            </Link>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Carousel Controls — bottom left */}
