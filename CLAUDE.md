@@ -23,7 +23,7 @@ No test runner is configured. The project uses `eslint-plugin-jest` for linting 
 
 ### Critical Import Rule
 
-All routing imports must come from `react-router`, NEVER from `@remix-run/*` or `react-router-dom`. See `.cursor/rules/hydrogen-react-router.mdc` for the full mapping.
+All routing imports must come from `react-router`, NEVER from `@remix-run/*` or `react-router-dom`. See `.cursor/rules/hydrogen-react-router.mdc` for the full Remix→React Router mapping table.
 
 ```ts
 // CORRECT
@@ -44,7 +44,7 @@ import { ... } from 'react-router-dom';
 ### Route Patterns
 
 - **Loader pattern**: Each route exports `loader` with `loadCriticalData` (awaited, above-fold) and `loadDeferredData` (streamed, below-fold via `<Suspense>` + `<Await>`)
-- **GraphQL**: Inline `#graphql` tagged template literals at the bottom of route files. Shared fragments live in `app/lib/fragments.ts`
+- **GraphQL**: Inline `#graphql` tagged template literals at the bottom of route files. Shared fragments live in `app/lib/fragments.ts`. Run `npm run codegen` after modifying queries to regenerate types in `storefrontapi.generated.d.ts`
 - **SEO**: Routes use `getSeoMeta()` from `app/lib/seo.ts` for OG/Twitter meta. Product pages include JSON-LD via `getProductJsonLd()`
 - **Dedicated routes** override the catch-all `pages.$handle.tsx`: `pages.about.tsx`, `pages.contact.tsx`, `pages.size-guide.tsx`
 
@@ -69,12 +69,21 @@ import { ... } from 'react-router-dom';
 - `app/lib/seo.ts` — SEO helpers (getSeoMeta, getProductJsonLd, getOrganizationJsonLd)
 - `public/logos/` — Brand logo variants (BLUE for header, WHITE for footer, BLACKBLUE for light backgrounds)
 
+### Printify Content Overrides
+
+Product descriptions come from Printify with inline styles (e.g., `color:#525252`). Global CSS overrides in `app/styles/app.css` force these to white text and dark-theme table borders using `!important`.
+
 ### Environment
 
 - `.env` contains Shopify credentials (not committed): `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `SESSION_SECRET`, etc.
 - Node.js >= 18 required
 - Deployed to Shopify Oxygen (Cloudflare Workers runtime)
+- Google Ads gtag.js (AW-17978852504) loaded in `root.tsx` head
+
+### Legacy URL Redirects
+
+Old WordPress URLs are handled via dedicated route files that return 301 redirects (e.g., `app/routes/about-us.tsx` → `/pages/about`). Add new redirect routes as needed for SEO preservation.
 
 ## Edit Tracking
 
-All changes must be recorded in `editsummary.txt` with: item number, component/file affected, what changed, and unique classNames added.
+All changes must be recorded in `editsummary.txt` with: item number, component/file affected, what changed, and unique classNames added. Continue numbering from the last entry (currently #73).

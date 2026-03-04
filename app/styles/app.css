@@ -478,6 +478,25 @@ button.reset > * {
 /* ============================================
    Route Error
    ============================================ */
+/* ============================================
+   Homepage Light Theme Scoping
+   ============================================ */
+.jfw-homepage-light a {
+  color: #111111;
+}
+.jfw-homepage-light a:hover {
+  color: #00CFFF;
+}
+/* Keep hero/motivation banner links white (dark overlay sections) */
+.jfw-homepage-light .jfw-hero-video a,
+.jfw-homepage-light .jfw-motivation-banner a {
+  color: #FFFFFF;
+}
+.jfw-homepage-light .jfw-hero-video a:hover,
+.jfw-homepage-light .jfw-motivation-banner a:hover {
+  color: #00CFFF;
+}
+
 @layer components {
   .route-error {
     @apply flex flex-col items-center justify-center min-h-screen text-center px-4;

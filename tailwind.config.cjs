@@ -11,6 +11,8 @@ module.exports = {
         'jfw-gray': '#1A1A1A',
         'jfw-blue-dark': '#009FCC',
         'jfw-blue-glow': 'rgba(0, 207, 255, 0.3)',
+        'jfw-light-gray': '#F5F5F5',
+        'jfw-border-light': '#E5E5E5',
       },
       fontFamily: {
         heading: ['Orbitron', 'sans-serif'],

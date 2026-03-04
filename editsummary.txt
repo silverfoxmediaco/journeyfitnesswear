@@ -801,9 +801,114 @@ Date: 2026-02-27
     - Hardcoded Home link in Header.tsx remains as the single source
 
 ========================================
+
+Homepage Redesign — Gymshark-Inspired White Theme
+Date: 2026-03-04
+========================================
+
+74. TAILWIND CONFIG — LIGHT THEME TOKENS (tailwind.config.cjs)
+    - Added jfw-light-gray (#F5F5F5) — section alternate background
+    - Added jfw-border-light (#E5E5E5) — light mode borders
+
+75. CSS SCOPING — HOMEPAGE LIGHT OVERRIDES (app/styles/app.css)
+    - Added .jfw-homepage-light scoped rules (outside @layer base for specificity)
+    - Override global dark link colors to #111111 on homepage
+    - Preserve white link colors inside hero video and motivation banner sections
+
+76. HOMEPAGE ROUTE — EXPANDED QUERIES + LOADER (app/routes/_index.tsx)
+    - Added HomepageProduct GraphQL fragment (id, handle, title, featuredImage, priceRange)
+    - Added MensProducts query: collection(handle: "mens") products(first: 9, sortKey: BEST_SELLING)
+    - Added WomensProducts query: same for "womens" collection
+    - Loader fetches all 3 queries in parallel via Promise.all
+    - Added jfw-homepage-light class to homepage wrapper
+    - Added FeaturedProducts + ActivitySection imports
+    - New section order: HeroBanner → FeaturedProducts → FeaturedCollections → ActivitySection → MotivationBanner → BrandStory → Newsletter
+
+77. VIDEO HERO — FULL REWRITE (app/components/home/HeroBanner.tsx)
+    - Replaced static image with <video> element (autoPlay, muted, loop, playsInline)
+    - Source: /videos/hero.mp4 (Kling AI generated, 5.1MB)
+    - Poster fallback: /images/woman-powerlifting.webp (shown while video loads)
+    - Dark overlay (bg-black/50) for text readability
+    - Retained framer-motion entrance animations for heading, subtext, CTA
+    - Unique classNames: jfw-hero-video, jfw-hero-video-bg, jfw-hero-video-overlay,
+      jfw-hero-video-heading, jfw-hero-video-subtext, jfw-hero-video-cta,
+      jfw-hero-video-scroll, jfw-hero-video-accent
+
+78. FEATURED PRODUCTS — NEW COMPONENT (app/components/home/FeaturedProducts.tsx)
+    - Tabbed Men's/Women's product grid (9 products each)
+    - Tab selector with ARIA roles (tablist, tab, tabpanel)
+    - Active tab: cyan underline + text color
+    - Product grid: grid-cols-2 md:grid-cols-3
+    - Light-themed inline product cards (white bg, dark text, cyan price)
+    - AnimatePresence for tab switch transitions
+    - "View All" CTA linking to /collections/mens or /collections/womens
+    - Uses Hydrogen Image + Money components
+    - Unique classNames: jfw-featured-products, jfw-featured-products-heading,
+      jfw-featured-products-accent, jfw-featured-products-tabs, jfw-featured-products-tab,
+      jfw-featured-products-tab-active, jfw-featured-products-grid,
+      jfw-home-product-card, jfw-home-product-image, jfw-home-product-title,
+      jfw-home-product-price, jfw-featured-products-cta
+
+79. FEATURED COLLECTIONS — WHITE THEME RESTYLE (app/components/home/FeaturedCollections.tsx)
+    - Section bg: bg-jfw-dark → bg-jfw-light-gray
+    - Heading text: text-jfw-white → text-gray-900
+    - Card bg: bg-jfw-gray → bg-white
+    - Card border: transparent → border-jfw-border-light
+    - Card hover: shadow-jfw-glow → shadow-lg shadow-jfw-blue/10
+    - Placeholder bg: bg-jfw-gray → bg-jfw-light-gray
+    - Image overlay and bottom text remain unchanged (white-on-dark overlay)
+
+80. ACTIVITY SECTION — NEW COMPONENT (app/components/home/ActivitySection.tsx)
+    - "What's Your Journey?" heading with cyan accent
+    - 4 lifestyle category tiles: Gym, Running, Yoga, Streetwear
+    - Grid: grid-cols-2 md:grid-cols-4
+    - Tiles: aspect-[3/4], image bg with gradient overlay, title + description
+    - Image error handling (graceful fallback to dark gradient if image missing)
+    - framer-motion staggered reveal on scroll
+    - Links to /collections (placeholder until activity-specific collections created)
+    - Unique classNames: jfw-activity-section, jfw-activity-heading,
+      jfw-activity-grid, jfw-activity-tile, jfw-activity-title, jfw-activity-desc
+
+81. MOTIVATION BANNER — NO CHANGES NEEDED (app/components/home/MotivationBanner.tsx)
+    - Dark overlay on full-bleed image works as visual contrast break on white page
+    - White text on dark overlay is design-agnostic
+
+82. BRAND STORY — WHITE THEME RESTYLE (app/components/home/BrandStory.tsx)
+    - Section bg: bg-jfw-black → bg-jfw-light-gray
+    - Image container bg: bg-jfw-gray → bg-white
+    - Heading text: text-jfw-white → text-gray-900
+    - Body text: text-gray-400 → text-gray-600
+    - Image gradient: from-jfw-black/30 → from-black/20
+    - Accent detail border: border-jfw-blue/20 → border-jfw-blue/30
+
+83. NEWSLETTER — WHITE THEME RESTYLE (app/components/home/Newsletter.tsx)
+    - Section bg: bg-jfw-dark → bg-white
+    - Removed background image (dumbbellrows.webp) and dark overlay
+    - Heading text: text-jfw-white → text-gray-900
+    - Body text: text-gray-400 → text-gray-600
+    - Input: bg-jfw-gray border-jfw-gray text-jfw-white → bg-white border-jfw-border-light text-gray-900
+    - Placeholder: text-gray-500 → text-gray-400
+    - Retained cyan blur accent for visual interest
+
+84. CODEGEN — REGENERATED TYPES (storefrontapi.generated.d.ts)
+    - Generated HomepageProductFragment type
+    - Generated MensProductsQuery, MensProductsQueryVariables
+    - Generated WomensProductsQuery, WomensProductsQueryVariables
+
+ASSETS ADDED:
+    - public/videos/hero.mp4 — Kling AI hero video (5.1MB, downloaded from S3)
+
+ASSETS NEEDED (placeholders in use):
+    - public/images/activity-gym.webp
+    - public/images/activity-running.webp
+    - public/images/activity-yoga.webp
+    - public/images/activity-streetwear.webp
+
+========================================
 BUILD STATUS: PASSING
 NOTES:
 - Live at journeyfitnesswear.com via Shopify Oxygen
 - .env configured with real Shopify credentials (not committed)
-- All 7 batches complete — full roadmap implemented
+- Homepage now uses white background (rest of site remains dark)
+- Activity section images pending — uses gradient fallback
 ========================================

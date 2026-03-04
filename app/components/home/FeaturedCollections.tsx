@@ -11,7 +11,7 @@ export function FeaturedCollections({collections}: FeaturedCollectionsProps) {
   if (!collections || collections.length === 0) return null;
 
   return (
-    <section className="jfw-featured-collections py-20 md:py-28 bg-jfw-dark">
+    <section className="jfw-featured-collections py-20 md:py-28 bg-jfw-light-gray">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -22,7 +22,7 @@ export function FeaturedCollections({collections}: FeaturedCollectionsProps) {
           transition={{duration: 0.6, ease: 'easeOut'}}
         >
           <div className="jfw-section-accent w-12 h-[2px] bg-jfw-blue mx-auto mb-6" />
-          <h2 className="jfw-section-heading font-heading text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.15em] text-jfw-white">
+          <h2 className="jfw-section-heading font-heading text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.15em] text-gray-900">
             Shop by <span className="text-jfw-blue">Category</span>
           </h2>
         </motion.div>
@@ -44,7 +44,7 @@ export function FeaturedCollections({collections}: FeaturedCollectionsProps) {
               <Link
                 to={`/collections/${collection.handle}`}
                 prefetch="intent"
-                className="jfw-collection-card group block relative overflow-hidden rounded-lg bg-jfw-gray border border-transparent hover:border-jfw-blue/30 transition-all duration-300 hover:shadow-jfw-glow"
+                className="jfw-collection-card group block relative overflow-hidden rounded-lg bg-white border border-jfw-border-light hover:border-jfw-blue/40 transition-all duration-300 hover:shadow-lg hover:shadow-jfw-blue/10"
               >
                 {/* Collection Image */}
                 <div className="jfw-collection-image aspect-[4/5] overflow-hidden">
@@ -55,8 +55,8 @@ export function FeaturedCollections({collections}: FeaturedCollectionsProps) {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                   ) : (
-                    <div className="w-full h-full bg-jfw-gray flex items-center justify-center">
-                      <span className="font-heading text-sm text-gray-600 uppercase tracking-wider">
+                    <div className="w-full h-full bg-jfw-light-gray flex items-center justify-center">
+                      <span className="font-heading text-sm text-gray-400 uppercase tracking-wider">
                         {collection.title}
                       </span>
                     </div>
@@ -64,15 +64,15 @@ export function FeaturedCollections({collections}: FeaturedCollectionsProps) {
                 </div>
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-jfw-black/80 via-jfw-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                 {/* Collection Info */}
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="jfw-collection-title font-heading text-lg md:text-xl uppercase tracking-[0.15em] text-jfw-white group-hover:text-jfw-blue transition-colors duration-300">
+                  <h3 className="jfw-collection-title font-heading text-lg md:text-xl uppercase tracking-[0.15em] text-white group-hover:text-jfw-blue transition-colors duration-300">
                     {collection.title}
                   </h3>
                   {collection.description && (
-                    <p className="font-body text-xs text-gray-400 mt-2 line-clamp-2">
+                    <p className="font-body text-xs text-gray-300 mt-2 line-clamp-2">
                       {collection.description}
                     </p>
                   )}
