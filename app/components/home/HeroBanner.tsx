@@ -9,20 +9,20 @@ const HERO_SLIDES = [
   {
     src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_eleme_1148_0.mp4`,
     poster: '/images/woman-powerlifting.webp',
-    heading: 'Embrace the',
-    headingAccent: 'Process',
-    subtext: 'Made in America graphic tee — bold statement, premium comfort.',
-    cta: 'Shop Now',
-    link: '/products/made-in-america-logo-on-front?ref=mens',
-  },
-  {
-    src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_eleme_1027_0.mp4`,
-    poster: '/images/woman-powerlifting.webp',
     heading: 'Train in',
     headingAccent: 'Style',
     subtext: 'Recycled padded bikini sports bra — built for performance, designed for you.',
     cta: 'Shop Now',
     link: '/products/journey-fitness-wear-womens-recycled-padded-bikini-sports-bra-red?ref=womens',
+  },
+  {
+    src: `${S3_BASE}/kling_20260305_Image_to_Video_keep_eleme_1027_0.mp4`,
+    poster: '/images/woman-powerlifting.webp',
+    heading: 'Embrace the',
+    headingAccent: 'Process',
+    subtext: 'Made in America graphic tee — bold statement, premium comfort.',
+    cta: 'Shop Now',
+    link: '/products/made-in-america-logo-on-front?ref=mens',
   },
 ];
 
