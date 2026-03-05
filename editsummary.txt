@@ -910,6 +910,12 @@ ASSETS NEEDED (placeholders in use):
     - Desktop (md+): video contained within viewport (landscape ratio preserved)
     - Unique className unchanged: jfw-hero-video-bg
 
+86. HERO VIDEO — MOBILE HEIGHT REDUCTION (app/components/home/HeroBanner.tsx)
+    - Changed section height from h-screen to h-[75vh] md:h-screen
+    - Mobile: 75vh (~700px on iPhone 15 Pro Max) — less video cropping
+    - Desktop (md+): full viewport height preserved
+    - Unique className unchanged: jfw-hero-video
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:

@@ -77,7 +77,7 @@ export function HeroBanner() {
   const slide = HERO_SLIDES[activeIndex];
 
   return (
-    <section className="jfw-hero-video relative w-full h-screen flex items-center overflow-hidden -mt-[var(--header-height)] bg-black">
+    <section className="jfw-hero-video relative w-full h-[75vh] md:h-screen flex items-center overflow-hidden -mt-[var(--header-height)] bg-black">
       {/* Video Slides */}
       {HERO_SLIDES.map((s, index) => (
         <video
