@@ -925,6 +925,15 @@ ASSETS NEEDED (placeholders in use):
     - Both listeners call forceClose → setType('closed')
     - Unique classNames unchanged
 
+88. CART ASIDE — CAN'T CLOSE AFTER ADD TO CART FIX (app/components/AddToCartButton.tsx)
+    - Bug: Cart slideout reopened immediately after closing when an item had been added
+    - Cause: useEffect dependency on onClick (inline arrow function) created new reference
+      on every re-render, causing the effect to re-fire and reopen the cart
+    - Fix: Added lastDataRef to track the fetcher.data we already acted on
+    - Effect now only fires onClick when fetcher.data changes to a NEW value
+    - Prevents the close → re-render → reopen loop
+    - Unique className unchanged: jfw-add-to-cart
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:

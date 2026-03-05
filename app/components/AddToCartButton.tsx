@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {type FetcherWithComponents} from 'react-router';
 import {CartForm, type OptimisticCartLineInput} from '@shopify/hydrogen';
 import {ShoppingBag} from 'lucide-react';
@@ -46,8 +46,17 @@ function AddToCartInner({
   children: React.ReactNode;
 }) {
   // Open cart aside AFTER the fetcher completes successfully
+  // Use a ref to track the last fetcher data we acted on,
+  // preventing re-fires when onClick reference changes on re-render
+  const lastDataRef = useRef<unknown>(null);
   useEffect(() => {
-    if (fetcher.state === 'idle' && fetcher.data && onClick) {
+    if (
+      fetcher.state === 'idle' &&
+      fetcher.data &&
+      fetcher.data !== lastDataRef.current &&
+      onClick
+    ) {
+      lastDataRef.current = fetcher.data;
       onClick();
     }
   }, [fetcher.state, fetcher.data, onClick]);
