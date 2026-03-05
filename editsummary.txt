@@ -916,6 +916,15 @@ ASSETS NEEDED (placeholders in use):
     - Desktop (md+): full viewport height preserved
     - Unique className unchanged: jfw-hero-video
 
+87. CART ASIDE — STUCK OPEN AFTER CHECKOUT BACK-NAV FIX (app/components/Aside.tsx)
+    - Bug: Hitting browser back from Shopify checkout left cart slideout stuck open/unresponsive
+    - Cause: Shopify checkout sends Clear-Site-Data header which invalidates bfcache,
+      so the pageshow event.persisted check never triggered the close handler
+    - Fix: Removed event.persisted guard — now closes aside on ANY pageshow event
+    - Added visibilitychange listener as secondary safety net (fires when tab regains focus)
+    - Both listeners call forceClose → setType('closed')
+    - Unique classNames unchanged
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:

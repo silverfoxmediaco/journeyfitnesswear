@@ -75,15 +75,27 @@ Aside.Provider = function AsideProvider({children}: {children: ReactNode}) {
   const [type, setType] = useState<AsideType>('closed');
 
   // Close aside when returning from external page (e.g. Shopify checkout)
-  // via browser back button — bfcache restores stale React state
+  // Shopify checkout sends Clear-Site-Data which can break bfcache,
+  // so we listen to multiple events to cover all back-navigation scenarios
   useEffect(() => {
-    const handlePageShow = (event: PageTransitionEvent) => {
-      if (event.persisted) {
-        setType('closed');
+    const forceClose = () => setType('closed');
+
+    // bfcache restore (persisted=true) or fresh reload after cache clear
+    const handlePageShow = () => forceClose();
+
+    // Tab regains focus after external navigation
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        forceClose();
       }
     };
+
     window.addEventListener('pageshow', handlePageShow);
-    return () => window.removeEventListener('pageshow', handlePageShow);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      window.removeEventListener('pageshow', handlePageShow);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   return (
