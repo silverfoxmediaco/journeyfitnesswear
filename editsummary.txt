@@ -945,6 +945,14 @@ ASSETS NEEDED (placeholders in use):
     - Removed carousel control classNames: jfw-hero-carousel-controls, jfw-hero-carousel-pause, jfw-hero-carousel-dots, jfw-hero-carousel-dot
     - New unique classNames: jfw-hero-video-bg-desktop, jfw-hero-video-bg-mobile, jfw-hero-video-content, jfw-hero-controls, jfw-hero-pause-btn
 
+90. HERO/HEADER WIDTH MISMATCH FIX (app/styles/app.css)
+    - Bug: Fixed header (left-0 right-0) spanned full viewport including scrollbar space,
+      while hero section inside document flow was viewport minus scrollbar width
+    - Fix: Added `scrollbar-gutter: stable` on html element so scrollbar space is reserved
+      in the layout, making fixed header and in-flow content the same width
+    - Added `overflow-x: hidden` to prevent any horizontal scroll
+    - No new classNames (global html rule)
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:
