@@ -974,6 +974,13 @@ ASSETS NEEDED (placeholders in use):
     - Removed `scrollbar-gutter: stable` and `overflow-x: hidden` from app.css (no longer needed)
     - No new classNames
 
+94. HERO/PAGE WIDTH FIX — REMOVE DEFAULT MARGINS FROM RESET.CSS (app/styles/reset.css)
+    - Root cause: Hydrogen default `body > main { margin: 0 1rem 1rem 1rem }` added 1rem
+      horizontal margin to main, making all page content narrower than the header
+    - Fix: Changed margin to `0` and section padding from `1rem 0` to `0`
+    - All sections already handle their own padding via Tailwind classes (py-16, px-4, etc.)
+    - No new classNames
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:
