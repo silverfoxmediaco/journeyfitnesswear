@@ -934,6 +934,17 @@ ASSETS NEEDED (placeholders in use):
     - Prevents the close → re-render → reopen loop
     - Unique className unchanged: jfw-add-to-cart
 
+89. HERO BANNER — REPLACE CAROUSEL WITH SINGLE RESPONSIVE VIDEO (app/components/home/HeroBanner.tsx)
+    - Removed two-slide carousel (HERO_SLIDES array, auto-rotate timer, goToSlide, nextSlide, carousel dots)
+    - Added desktop video: s3://journeyfitnesswear/newheroareavideo.mp4 (hidden below md breakpoint)
+    - Added mobile video: s3://journeyfitnesswear/newheromobilevideo.mp4 (hidden at md+ breakpoint)
+    - Desktop video uses `hidden md:block`, mobile uses `block md:hidden`
+    - Kept pause/play control, scroll indicator, and dark overlay
+    - Text overlay is placeholder — to be discussed with client
+    - Removed unused imports: useState (carousel), useEffect, useCallback, Link, AnimatePresence
+    - Removed carousel control classNames: jfw-hero-carousel-controls, jfw-hero-carousel-pause, jfw-hero-carousel-dots, jfw-hero-carousel-dot
+    - New unique classNames: jfw-hero-video-bg-desktop, jfw-hero-video-bg-mobile, jfw-hero-video-content, jfw-hero-controls, jfw-hero-pause-btn
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:
