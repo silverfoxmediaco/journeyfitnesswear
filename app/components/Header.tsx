@@ -37,7 +37,7 @@ export function Header({
 
   return (
     <header
-      className={`jfw-header fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-jfw-white ${
+      className={`jfw-header sticky top-0 z-50 transition-all duration-300 bg-jfw-white ${
         scrolled
           ? 'shadow-lg border-b border-gray-200'
           : ''

@@ -24,7 +24,7 @@ export function HeroBanner() {
   };
 
   return (
-    <section className="jfw-hero-video relative w-full h-[75vh] md:h-screen flex items-center overflow-hidden -mt-[var(--header-height)] bg-black">
+    <section className="jfw-hero-video relative w-full h-[75vh] md:h-screen flex items-center overflow-hidden bg-black">
       {/* Desktop Video (hidden on mobile) */}
       <video
         ref={desktopVideoRef}

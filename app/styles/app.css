@@ -479,15 +479,6 @@ button.reset > * {
    Route Error
    ============================================ */
 /* ============================================
-   Scrollbar-aware layout — prevent fixed header
-   from being wider than the page content
-   ============================================ */
-html {
-  overflow-x: hidden;
-  scrollbar-gutter: stable;
-}
-
-/* ============================================
    Homepage Light Theme Scoping
    ============================================ */
 .jfw-homepage-light a {

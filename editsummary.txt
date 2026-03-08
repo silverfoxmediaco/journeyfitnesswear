@@ -964,6 +964,16 @@ ASSETS NEEDED (placeholders in use):
     - Tagline paragraph remains commented out pending finalization
     - No new classNames
 
+93. HEADER/HERO WIDTH MISMATCH — SWITCH TO STICKY HEADER (Header.tsx, PageLayout.tsx, HeroBanner.tsx, app.css)
+    - Root cause: `position: fixed` with `left-0 right-0` spans full viewport including scrollbar,
+      while in-flow content is viewport minus scrollbar — creating a width gap
+    - Previous `scrollbar-gutter: stable` fix didn't work on iOS overlay scrollbars
+    - Fix: Changed header from `fixed top-0 left-0 right-0` to `sticky top-0` — stays in document flow
+    - Removed spacer div in PageLayout (no longer needed with sticky)
+    - Removed `-mt-[var(--header-height)]` from hero section (no spacer to pull over)
+    - Removed `scrollbar-gutter: stable` and `overflow-x: hidden` from app.css (no longer needed)
+    - No new classNames
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:

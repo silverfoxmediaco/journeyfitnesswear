@@ -45,8 +45,6 @@ export function PageLayout({
           publicStoreDomain={publicStoreDomain}
         />
       )}
-      {/* Spacer for fixed header */}
-      <div style={{height: 'var(--header-height)'}} />
       <main id="main-content" className="jfw-main min-h-screen">{children}</main>
       <Footer
         footer={footer}
