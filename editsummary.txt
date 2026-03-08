@@ -953,6 +953,11 @@ ASSETS NEEDED (placeholders in use):
     - Added `overflow-x: hidden` to prevent any horizontal scroll
     - No new classNames (global html rule)
 
+91. HERO BANNER — COMMENT OUT PLACEHOLDER TEXT OVERLAY (app/components/home/HeroBanner.tsx)
+    - Commented out the entire text overlay block (heading, subtext, accent line)
+    - Will be restored once titles and taglines are finalized
+    - No classNames changed
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:
