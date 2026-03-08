@@ -958,6 +958,12 @@ ASSETS NEEDED (placeholders in use):
     - Will be restored once titles and taglines are finalized
     - No classNames changed
 
+92. HERO BANNER — UPDATE TITLE & UNCOMMENT OVERLAY (app/components/home/HeroBanner.tsx)
+    - Restored text overlay block (was fully commented out)
+    - Changed h1 from "Journey Fitness Wear" to "What's Your Journey" with "Journey" in jfw-blue
+    - Tagline paragraph remains commented out pending finalization
+    - No new classNames
+
 ========================================
 BUILD STATUS: PASSING
 NOTES:

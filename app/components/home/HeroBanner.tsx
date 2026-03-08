@@ -54,7 +54,7 @@ export function HeroBanner() {
       {/* Dark overlay for text readability */}
       <div className="jfw-hero-video-overlay absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent z-10" />
 
-      {/* Text Overlay — commented out until titles/taglines are finalized
+      {/* Text Overlay */}
       <div className="relative z-20 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
         <motion.div
           className="jfw-hero-video-content max-w-lg"
@@ -64,15 +64,16 @@ export function HeroBanner() {
         >
           <div className="jfw-hero-video-accent w-16 h-[2px] bg-jfw-blue mb-8" />
           <h1 className="jfw-hero-video-heading font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[60px] uppercase tracking-[0.15em] text-white leading-tight mb-6">
-            Journey Fitness{' '}
-            <span className="text-jfw-blue">Wear</span>
+            What's Your{' '}
+            <span className="text-jfw-blue">Journey</span>
           </h1>
+          {/* Tagline — uncomment when ready
           <p className="jfw-hero-video-subtext font-body text-base sm:text-lg md:text-xl text-gray-300 mb-10 leading-relaxed">
-            Placeholder text — we will update this together.
+            Tagline goes here.
           </p>
+          */}
         </motion.div>
       </div>
-      */}
 
       {/* Pause / Play control — bottom left */}
       <div className="jfw-hero-controls absolute bottom-8 left-6 sm:left-8 z-20 flex items-center gap-3">
